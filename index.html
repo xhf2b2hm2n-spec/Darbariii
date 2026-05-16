@@ -50,6 +50,14 @@ body::after {
   opacity: 0.025; pointer-events: none; z-index: 9999; mix-blend-mode: overlay;
 }
 
+/* Custom Cursor (Desktop Only) */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  .gn-btn, .lb, button, .mi, a { cursor: none !important; }
+  #cur { width:4px;height:4px;background:var(--gold-light);border-radius:50%;position:fixed;pointer-events:none;z-index:100000;box-shadow: 0 0 8px 1px rgba(243, 229, 171, 0.8); }
+  #cur-ring { width:28px;height:28px;border:1px solid rgba(212, 175, 55, 0.5);border-radius:50%;position:fixed;pointer-events:none;z-index:99998;transition:transform .1s ease-out; }
+}
+
 /* Language Switcher */
 #lang-sw { position:fixed; top:2rem; left:2rem; z-index:200; display:flex; gap:.2rem; padding:.3rem; border-radius:999px; background:var(--glass-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid var(--glass-brd); opacity:0; transition:opacity .6s; }
 #lang-sw.show { opacity:1; }
@@ -58,8 +66,8 @@ html[lang="en"] .lb, html[lang="tr"] .lb { font-family: 'Cinzel', serif; font-si
 .lb:hover { color:var(--ink); }
 .lb.active { color:var(--gold-light); background:rgba(212,175,55,.15); border:1px solid rgba(212,175,55,.3); }
 
-/* Cinematic Section (Height optimized based on user fix) */
-#cinematic-wrap { position:relative; height:260vh; z-index:1; }
+/* Cinematic Section (Height optimized for smoother scroll) */
+#cinematic-wrap { position:relative; height:340vh; z-index:1; }
 #cinematic-sticky { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; }
 #c { position:absolute; inset:0; width:100%; height:100%; display:block; }
 #vig { position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 10%,rgba(2,4,9,.85) 65%,rgba(2,4,9,1) 100%);z-index:5;pointer-events:none; }
@@ -74,19 +82,19 @@ html[lang="en"] .st-title, html[lang="tr"] .st-title { font-family: 'Cinzel', se
 .st-sub { font-size:clamp(1.1rem,2vw,1.4rem);color:var(--ink-soft);opacity:0;transform:translateY(15px);transition:all .9s .2s ease; font-weight:300; }
 html[lang="en"] .st-sub, html[lang="tr"] .st-sub { font-style: italic; letter-spacing: .15em; font-size:clamp(1rem,2vw,1.3rem);}
 
-/* The Fix for Blue Screen Failsafe */
+/* Blue Screen Failsafe for Texts */
 .scene-text.active .st-label,.scene-text.active .st-title,.scene-text.active .st-sub { opacity:1;transform:translateY(0); }
 .scene-text#s0 { opacity: 1; } 
 
 /* Main Brand H1 styling */
 #s0 .st-title { font-size:clamp(3rem,8vw,6.5rem); color: var(--gold-light); }
 
-/* Custom Skip Button (User Fix #4) */
+/* Custom Skip Button */
 #skip-menu {
   position: absolute;
   bottom: 7rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(10px);
   z-index: 25;
   background: rgba(212,175,55,.14);
   color: var(--gold-light);
@@ -98,9 +106,16 @@ html[lang="en"] .st-sub, html[lang="tr"] .st-sub { font-style: italic; letter-sp
   cursor: pointer;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
 }
 html[lang="en"] #skip-menu, html[lang="tr"] #skip-menu { font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;}
+#skip-menu.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
 #skip-menu:hover { background: rgba(212,175,55,.25); border-color: var(--gold); }
 
 #scroll-ind { position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:1.2rem;transition:opacity .5s; pointer-events: none;}
@@ -146,7 +161,7 @@ html[lang="en"] .sec-title, html[lang="tr"] .sec-title { font-family: 'Cinzel', 
 
 .mgrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.8rem; }
 
-/* Elegant Menu Cards (Subtle Redesign) */
+/* Elegant Menu Cards */
 .mi { 
   background:var(--bg-card); border-radius:6px; position:relative; overflow:hidden; 
   transition: transform .5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow .5s ease;
@@ -154,7 +169,6 @@ html[lang="en"] .sec-title, html[lang="tr"] .sec-title { font-family: 'Cinzel', 
 }
 .mi-content { padding:3.5rem 2.5rem; position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; min-height: 290px;}
 
-/* Elegant expanding bottom line on hover */
 .mi::after { 
   content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:1px; 
   background:var(--gold); transition:width .6s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 3;
@@ -207,10 +221,6 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
 .rv.vis { opacity:1; transform:translateY(0); }
 
 /* Accessibility & Print */
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  .rv { opacity: 1 !important; transform: none !important; }
-}
 @media print {
   #cinematic-wrap, #glass-nav, #lang-sw, #skip-menu { display: none !important; }
   body { background: white; color: black; }
@@ -221,6 +231,7 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
 
 /* Mobile Polish */
 @media(max-width:850px){ 
+  #cinematic-wrap { height: 320vh; }
   #lang-sw { top: 1.5rem; left: 1.5rem; padding: .2rem;}
   .lb { font-size: .6rem; padding: .3rem .6rem;}
   
@@ -264,7 +275,6 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
     <div id="vig"></div>
     <div id="prog-bar"></div>
     
-    <!-- Fix #6: class active ensures it's visible even before JS fires -->
     <div class="scene-text active" id="s0">
       <h1 class="st-title" data-i="hero_title" data-html="true">از تنور<br>تا فنجان</h1>
       <p class="st-sub" data-i="hero_sub">نان، قهوه و اصالت</p>
@@ -284,7 +294,6 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
       <h2 class="st-title" data-i="s3_title" data-html="true" style="font-size:clamp(3rem,8vw,6.5rem); color:var(--gold-light);">نان<br>درباری</h2>
     </div>
     
-    <!-- Fix #4: Skip Button -->
     <button id="skip-menu" data-i="skip" aria-label="Skip Introduction">مشاهده منو</button>
     <div id="scroll-ind"><span data-i="scroll">Scroll</span><div class="sc-line"></div></div>
   </div>
@@ -382,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.rv').forEach(e => rvObs.observe(e));
   }
 
-  // FIX #4: Skip Menu Button Logic
+  // Skip Menu Button Logic
   const skipMenu = document.getElementById('skip-menu');
   if(skipMenu){
     skipMenu.addEventListener('click', () => {
@@ -429,10 +438,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // CANVAS LOGIC (OPTIMIZED WITH DPR & PAUSE)
+  // CANVAS LOGIC (Optimized)
   const canvas = document.getElementById('c');
   let ctx, W, H, dpr;
   let isCanvasActive = true;
+
+  // Global scroll init
+  let scrollP=0;
+  function getScrollP(){
+    const wrap = document.getElementById('cinematic-wrap'); if (!wrap) return 0;
+    const maxScroll = wrap.offsetHeight - window.innerHeight; if(maxScroll <= 0) return 0;
+    return clamp01((window.scrollY || window.pageYOffset) / maxScroll);
+  }
+  
+  // Call immediately to set initial state
+  scrollP = getScrollP();
 
   if(canvas) {
     ctx = canvas.getContext('2d', { alpha: false });
@@ -508,12 +528,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
   let tick = 0;
 
+  // FIX #3: Scene 0 now renders the bean immediately
   function scene0(p){
-    ctx.fillStyle = rgb(C.bgMid, 1-p); ctx.fillRect(0,0,W,H);
+    ctx.fillStyle = rgb(C.bgMid, 1-p); 
+    ctx.fillRect(0,0,W,H);
     const gr = ctx.createRadialGradient(W/2, H*0.5, 0, W/2, H*0.5, Math.max(W,H));
-    gr.addColorStop(0, rgb(C.gold, 0.15 * (1-p))); gr.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = gr; ctx.fillRect(0,0,W,H);
-    const bSz = easeOut(p) * 80; if(bSz > 0) drawBean(W/2, H*0.5, bSz, Math.PI*0.1 + p*0.2, easeOut(p));
+    gr.addColorStop(0, rgb(C.gold, 0.18 * (1-p)));
+    gr.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gr; 
+    ctx.fillRect(0,0,W,H);
+    
+    // Bean is always visible from the first frame
+    const bSz = 38 + easeOut(p) * 55;
+    drawBean(W/2, H*0.5, bSz, Math.PI*0.1 + p*0.4, 0.75 + easeOut(p) * 0.25);
   }
 
   function scene1(p){ ctx.fillStyle = rgb(C.bg); ctx.fillRect(0,0,W,H); const sz = 100 + p*50; drawBean(W/2, H*0.5 + (p*100), sz, p*0.5, 1 - Math.pow(p, 4)); }
@@ -545,19 +572,12 @@ document.addEventListener("DOMContentLoaded", function() {
     if (p > 0.3) drawSteam(cx2, cy2 - 30, clamp01((p - 0.3) / 0.7));
   }
 
-  const SCENES=[scene0, scene1, scene2, scene3]; const NUM_SCENES=SCENES.length; let scrollP=0;
-
-  function getScrollP(){
-    const wrap = document.getElementById('cinematic-wrap'); if (!wrap) return 0;
-    const maxScroll = wrap.offsetHeight - window.innerHeight; if(maxScroll <= 0) return 0;
-    return clamp01((window.scrollY || window.pageYOffset) / maxScroll);
-  }
+  const SCENES=[scene0, scene1, scene2, scene3]; const NUM_SCENES=SCENES.length;
 
   function getScene(p){
     const raw = p * NUM_SCENES, si = Math.min(Math.floor(raw), NUM_SCENES - 1); return { si, sp: raw - Math.floor(raw) };
   }
 
-  // FIX #1: The actual logical fix for immediate text rendering
   function updateTexts(si, sp){
     for(let i=0; i<NUM_SCENES; i++){
       const el = document.getElementById('s'+i);
@@ -578,14 +598,12 @@ document.addEventListener("DOMContentLoaded", function() {
   
   if(langSw) langSw.classList.add('show');
 
-  // THROTTLED SCROLL LISTENER
+  // THROTTLED SCROLL LISTENER for UI updates
   let tickingScroll = false;
   window.addEventListener('scroll',()=>{
     if(!tickingScroll) {
       requestAnimationFrame(() => {
-        scrollP = getScrollP();
-        
-        // Hide scroll ind but show skip menu dynamically
+        // UI updates based on current scrollP
         if(scrollInd) scrollInd.style.opacity = scrollP > 0.05 ? '0' : '1';
         if(skipMenu) {
           if(scrollP > 0.05 && scrollP < 0.9) skipMenu.classList.add('show');
@@ -595,7 +613,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const progBar = document.getElementById('prog-bar');
         if(progBar) progBar.style.width = (scrollP*100) + '%';
         
-        // FIX #2: Show nav earlier (0.45)
         if(scrollP >= 0.45 && !navShown){ navShown=true; if(glassNav) glassNav.classList.add('show'); }
         else if(scrollP < 0.45 && navShown){ navShown=false; if(glassNav) glassNav.classList.remove('show'); }
         
@@ -606,21 +623,42 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
+  // FIX #1: Render loop - removed reduce motion block & added scrollP sync
   function render(){
-    if(ctx && isCanvasActive && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if(ctx && isCanvasActive) {
       tick++;
+      scrollP = getScrollP(); // Sync scroll constantly inside the loop
+      
       const { si, sp } = getScene(scrollP); const fadeZone = 0.15;
+      
       if(sp > 1 - fadeZone && si < NUM_SCENES - 1){
-        SCENES[si](sp); ctx.save(); ctx.globalAlpha = (sp - (1 - fadeZone)) / fadeZone; SCENES[si+1](0); ctx.restore();
-      } else { SCENES[si](sp); }
+        SCENES[si](sp); 
+        ctx.save(); 
+        ctx.globalAlpha = (sp - (1 - fadeZone)) / fadeZone; 
+        SCENES[si+1](0); 
+        ctx.restore();
+      } else { 
+        SCENES[si](sp); 
+      }
       updateTexts(si, sp);
     }
     requestAnimationFrame(render);
   }
   
-  // Ensure the very first frame paints perfectly before user scrolls
   updateTexts(0, 0); 
   requestAnimationFrame(render);
+
+  // DESKTOP CURSOR
+  const cur=document.getElementById('cur'), ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  if(cur && ring) {
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+    (function cursorLoop(){
+      cur.style.transform=`translate3d(px, px, 0)`;
+      rx+=(mx-rx)*.15;ry+=(my-ry)*.15; ring.style.transform=`translate3d(px, px, 0)`;
+      requestAnimationFrame(cursorLoop);
+    })();
+  }
 
   // TRANSLATION ENGINE & DATA
   const T = {
