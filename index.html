@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کافه نان درباری | Nan Darbari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Parisian Night Palette: Deep Navy & Warm Champagne Gold */
+  --bg:         #060B14;
+  --bg-mid:     #0B1320;
+  --bg-card:    #09101C;
+  --bg-hover:   #0E1726;
+  --ink:        #FDF8ED;
+  --ink-soft:   #DFCFB2;
+  --ink-muted:  #8E9BAE;
+  
+  --gold:       #CFA144;
+  --gold-light: #EED081;
+  --gold-dim:   #8C6A27;
+  
+  --line:       rgba(207, 161, 68, 0.12);
+  --line-warm:  rgba(207, 161, 68, 0.25);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--ink); font-family:'Cormorant Garamond',serif; overflow-x:hidden; cursor:none; }
+
+/* Custom Cursor */
+#cur { width:7px;height:7px;background:var(--gold-light);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;mix-blend-mode:screen; }
+#cur-ring { width:26px;height:26px;border:1px solid rgba(207,161,68,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:all .13s ease; }
+
+/* Cinematic Section */
+#cinematic-wrap { position:relative; height:500vh; }
+#cinematic-sticky { position:sticky;top:0;height:100vh;width:100%;overflow:hidden; }
+#c { position:absolute;inset:0;width:100%;height:100%; }
+
+/* Luxury Grain Overlay */
+#cinematic-sticky::after {
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.06;pointer-events:none;z-index:15;mix-blend-mode:overlay;
+}
+#vig { position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(6,11,20,.7) 75%,rgba(3,6,10,.95) 100%);z-index:5;pointer-events:none; }
+
+/* Typography inside Cinematic */
+.scene-text { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;pointer-events:none;text-align:center; }
+.st-label { font-family:'Cinzel',serif;font-size:clamp(.48rem,1vw,.68rem);letter-spacing:.55em;color:var(--gold);text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .7s,transform .7s; }
+.st-title { font-family:'Cinzel',serif;font-size:clamp(1.6rem,5vw,4rem);font-weight:600;color:var(--ink);letter-spacing:.07em;line-height:1.1;margin:.4em 0 .3em;opacity:0;transform:translateY(14px);transition:opacity .85s .1s,transform .85s .1s;text-shadow:0 4px 40px rgba(207,161,68,.3),0 0 80px rgba(207,161,68,.1); }
+.st-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,1.8vw,1.25rem);color:var(--ink-soft);opacity:0;transform:translateY(10px);transition:opacity .75s .2s,transform .75s .2s;letter-spacing:.14em; }
+.scene-text.active .st-label,.scene-text.active .st-title,.scene-text.active .st-sub { opacity:1;transform:translateY(0); }
+
+#scroll-ind { position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:.5rem;transition:opacity .5s; }
+#scroll-ind span { font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.45em;color:var(--ink-muted);text-transform:uppercase; }
+.sc-line { width:1px;height:44px;background:linear-gradient(180deg,var(--gold),transparent);animation:scPulse 2.2s infinite; }
+@keyframes scPulse { 0%,100%{opacity:.25} 50%{opacity:.85} }
+
+#prog-bar { position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-light));width:0%;z-index:20; box-shadow: 0 0 10px var(--gold); }
+
+/* ULTRA LUXURY GLASS NAV (Moved to Top) */
+#glass-nav { position:fixed;top:2.5rem;left:50%;transform:translateX(-50%) translateY(-130px);z-index:300;transition:transform .65s cubic-bezier(.34,1.5,.64,1),opacity .5s;opacity:0; }
+#glass-nav.show { transform:translateX(-50%) translateY(0);opacity:1; }
+.gnav-inner { display:flex;align-items:center;padding:.35rem .4rem;border-radius:999px;background:rgba(11,19,32,.45);backdrop-filter:blur(40px) saturate(1.5);-webkit-backdrop-filter:blur(40px) saturate(1.5);border:1px solid rgba(207,161,68,.2);box-shadow:0 2px 0 rgba(255,255,255,.05) inset,0 15px 40px rgba(0,0,0,.6),0 0 0 1px rgba(207,161,68,.1);position:relative;overflow:hidden; }
+.gnav-inner::before { content:'';position:absolute;top:0;left:10%;right:10%;height:40%;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0));border-radius:999px 999px 0 0;pointer-events:none; }
+.gnav-pill { position:absolute;height:calc(100% - .7rem);border-radius:999px;background:linear-gradient(135deg,rgba(207,161,68,.25),rgba(207,161,68,.05));border:1px solid rgba(207,161,68,.35);box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 0 20px rgba(207,161,68,.15);transition:left .45s cubic-bezier(.34,1.2,.64,1),width .45s cubic-bezier(.34,1.2,.64,1);pointer-events:none;top:.35rem; }
+.gn-btn { position:relative;background:none;border:none;cursor:none;padding:.6rem 1.6rem;border-radius:999px;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;color:rgba(223,207,178,.55);text-transform:uppercase;transition:color .3s;white-space:nowrap;z-index:1; }
+.gn-btn:hover { color:var(--ink-soft); }
+.gn-btn.active { color:var(--gold-light); text-shadow: 0 0 10px rgba(207,161,68,.3); }
+
+/* LANG SWITCHER */
+#lang-sw { position:fixed;top:2.5rem;left:2.5rem;z-index:200;display:flex;gap:.28rem;padding:.26rem .3rem;border-radius:999px;background:rgba(11,19,32,.45);backdrop-filter:blur(30px) saturate(1.5);-webkit-backdrop-filter:blur(30px) saturate(1.5);border:1px solid rgba(207,161,68,.15);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 4px 18px rgba(0,0,0,.4);opacity:0;transition:opacity .5s; }
+#lang-sw.show { opacity:1; }
+.lb { background:none;border:none;cursor:none;color:rgba(142,155,174,.7);font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.15em;padding:.3rem .7rem;transition:all .3s;text-transform:uppercase;border-radius:999px; }
+.lb:hover { color:var(--ink-soft); }
+.lb.active { color:var(--gold-light);background:rgba(207,161,68,.15);border:1px solid rgba(207,161,68,.25);box-shadow:0 1px 0 rgba(255,255,255,.1) inset; text-shadow: 0 0 8px rgba(207,161,68,.4); }
+
+/* MENU CARDS */
+#menu-section { background:var(--bg);position:relative;z-index:2; }
+.menu-inner { max-width:1150px;margin:0 auto;padding:7rem 2rem; }
+.sec-head { text-align:center;margin-bottom:4.5rem; }
+.sec-label { font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.55em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem; text-shadow: 0 0 15px rgba(207,161,68,.2); }
+.sec-title { font-family:'Cinzel',serif;font-size:clamp(1.8rem,3.5vw,3rem);color:var(--ink);font-weight:400;letter-spacing:.08em; }
+.sec-orn { width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);margin:1.2rem auto 0; box-shadow: 0 0 10px var(--gold-dim); }
+
+.mgrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden; }
+.mi { background:var(--bg-card);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .4s ease;cursor:none; }
+.mi::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(207,161,68,.08) 0%,transparent 60%);opacity:0;transition:opacity .5s; }
+.mi::after { content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--gold-dim),var(--gold-light));transition:width .6s cubic-bezier(.19,1,.22,1); }
+.mi:hover { background:var(--bg-hover); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.3); z-index: 10; }
+.mi:hover::before { opacity:1; }
+.mi:hover::after { width:100%; }
+
+.mi-num { font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.35em;color:rgba(207,161,68,.35);margin-bottom:1.2rem; }
+.mi-name { font-family:'Cinzel',serif;font-size:1.1rem;color:var(--ink);letter-spacing:.05em;margin-bottom:.4rem;font-weight:600; }
+.mi-local { font-size:.9rem;color:var(--ink-soft);margin-bottom:.8rem;opacity:.8; }
+.mi-desc { font-size:.85rem;color:var(--ink-muted);line-height:1.8;font-style:italic;margin-bottom:1.8rem; }
+.mi-foot { display:flex;justify-content:space-between;align-items:flex-end; }
+.mi-price { font-family:'Cinzel',serif;font-size:.95rem;color:var(--gold-light);letter-spacing:.07em; }
+.mi-tag { font-size:.5rem;letter-spacing:.2em;color:rgba(207,161,68,.8);text-transform:uppercase;border:1px solid rgba(207,161,68,.3);padding:.25rem .6rem;border-radius:2px; background: rgba(207,161,68,.05); }
+
+.divider { display:flex;align-items:center;gap:1.4rem;padding:1rem 2rem;max-width:1100px;margin:0 auto; }
+.dl { flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line-warm)); }
+.dl:last-child { background:linear-gradient(90deg,var(--line-warm),transparent); }
+.di { color:rgba(207,161,68,.4);font-size:1rem; text-shadow: 0 0 10px rgba(207,161,68,.3); }
+
+footer { border-top:1px solid var(--line);padding:4rem 2rem;text-align:center;margin-bottom:6rem; }
+footer .fn { font-family:'Cinzel',serif;font-size:1.25rem;color:var(--gold);letter-spacing:.35em;margin-bottom:.8rem; text-shadow: 0 0 20px rgba(207,161,68,.2); }
+footer p { font-size:.65rem;color:var(--ink-muted);letter-spacing:.25em; text-transform: uppercase; }
+
+.rv { opacity:0;transform:translateY(30px);transition:opacity .9s ease-out,transform .9s cubic-bezier(.19,1,.22,1); }
+.rv.vis { opacity:1;transform:translateY(0); }
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+.rv.d4{transition-delay:.32s}.rv.d5{transition-delay:.40s}.rv.d6{transition-delay:.48s}
+
+@media(max-width:768px){ 
+  /* Move lang switcher to bottom in mobile so it doesn't collide with the top nav */
+  #lang-sw{ top:auto; bottom:2rem; left:50%; transform:translateX(-50%); } 
+  .mgrid{grid-template-columns:1fr} 
+  .menu-inner{padding:4rem 1rem} 
+  .gn-btn{padding:.5rem .9rem;font-size:.55rem;letter-spacing:.15em} 
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<div id="lang-sw">
+  <button class="lb active" onclick="setLang('fa')">FA</button>
+  <button class="lb" onclick="setLang('en')">EN</button>
+  <button class="lb" onclick="setLang('tr')">TR</button>
+</div>
+
+<nav id="glass-nav">
+  <div class="gnav-inner">
+    <div class="gnav-pill" id="gnav-pill"></div>
+    <button class="gn-btn active" data-target="hot" data-i="nav_hot">نوشیدنی گرم</button>
+    <button class="gn-btn" data-target="cold" data-i="nav_cold">نوشیدنی سرد</button>
+    <button class="gn-btn" data-target="bakery" data-i="nav_bakery">نان و شیرینی</button>
+  </div>
+</nav>
+
+<div id="cinematic-wrap">
+  <div id="cinematic-sticky">
+    <canvas id="c"></canvas>
+    <div id="vig"></div>
+    <div id="prog-bar"></div>
+    <div class="scene-text" id="s0">
+      <p class="st-label">NAN DARBARI · نان درباری</p>
+      <h1 class="st-title">از دانه<br>تا فنجان</h1>
+      <p class="st-sub">یک سفر</p>
+    </div>
+    <div class="scene-text" id="s1">
+      <p class="st-label">Scene I</p>
+      <h1 class="st-title">دانه‌های قهوه</h1>
+      <p class="st-sub">از مزارع بلندی‌های اتیوپی</p>
+    </div>
+    <div class="scene-text" id="s2">
+      <p class="st-label">Scene II</p>
+      <h1 class="st-title">تفت و آسیاب</h1>
+      <p class="st-sub">حرارت، تحول، عطر</p>
+    </div>
+    <div class="scene-text" id="s3">
+      <p class="st-label" style="letter-spacing:.8em">کافه</p>
+      <h1 class="st-title" style="font-size:clamp(2rem,8vw,6rem);letter-spacing:.15em">NAN<br>DARBARI</h1>
+      <p class="st-sub" style="margin-top:.5rem">نان درباری</p>
+    </div>
+    <div id="scroll-ind"><span>scroll</span><div class="sc-line"></div></div>
+  </div>
+</div>
+
+<div id="menu-section">
+  <div class="menu-inner" id="hot">
+    <div class="sec-head rv"><p class="sec-label" data-i="hot_label">— نوشیدنی‌های گرم —</p><h2 class="sec-title" data-i="hot_title">نوشیدنی گرم</h2><div class="sec-orn"></div></div>
+    <div class="mgrid">
+      <div class="mi rv d1"><div class="mi-num">01</div><div class="mi-name" data-i="h1n">Espresso</div><div class="mi-local" data-i="h1l">اسپرسو</div><div class="mi-desc" data-i="h1d">دانه‌های منتخب برزیل، تفت‌داده با دقت — تلخ و عمیق</div><div class="mi-foot"><span class="mi-price">۴۵,۰۰۰ ت</span><span class="mi-tag" data-i="tHot">گرم</span></div></div>
+      <div class="mi rv d2"><div class="mi-num">02</div><div class="mi-name" data-i="h2n">Cortado</div><div class="mi-local" data-i="h2l">کورتادو</div><div class="mi-desc" data-i="h2d">تعادل بی‌نقص میان اسپرسو و شیر گرم بخارپز</div><div class="mi-foot"><span class="mi-price">۵۵,۰۰۰ ت</span><span class="mi-tag" data-i="tHot">گرم</span></div></div>
+      <div class="mi rv d3"><div class="mi-num">03</div><div class="mi-name" data-i="h3n">Flat White</div><div class="mi-local" data-i="h3l">فلت وایت</div><div class="mi-desc" data-i="h3d">دو شات اسپرسو، میکروفوم ابریشمی — کرمی و قوی</div><div class="mi-foot"><span class="mi-price">۶۵,۰۰۰ ت</span><span class="mi-tag" data-i="tHot">گرم</span></div></div>
+      <div class="mi rv d4"><div class="mi-num">04</div><div class="mi-name" data-i="h4n">Pour Over</div><div class="mi-local" data-i="h4l">پوراور</div><div class="mi-desc" data-i="h4d">دم‌آوری آهسته، طعمی شفاف از قهوه‌های تک‌خاستگاه</div><div class="mi-foot"><span class="mi-price">۷۵,۰۰۰ ت</span><span class="mi-tag" data-i="tSpec">ویژه</span></div></div>
+      <div class="mi rv d5"><div class="mi-num">05</div><div class="mi-name" data-i="h5n">Cappuccino</div><div class="mi-local" data-i="h5l">کاپوچینو</div><div class="mi-desc" data-i="h5d">فوم غلیظ و کشدار، سه لایه‌ی کلاسیک ایتالیایی</div><div class="mi-foot"><span class="mi-price">۵۸,۰۰۰ ت</span><span class="mi-tag" data-i="tHot">گرم</span></div></div>
+      <div class="mi rv d6"><div class="mi-num">06</div><div class="mi-name" data-i="h6n">Cardamom Latte</div><div class="mi-local" data-i="h6l">لاته هل</div><div class="mi-desc" data-i="h6d">ترکیب لاته نرم با هل سبز تازه — امضای نان درباری</div><div class="mi-foot"><span class="mi-price">۶۸,۰۰۰ ت</span><span class="mi-tag" data-i="tSig">امضا</span></div></div>
+    </div>
+  </div>
+  <div class="divider"><div class="dl"></div><div class="di">✦</div><div class="dl"></div></div>
+  <div class="menu-inner" id="cold">
+    <div class="sec-head rv"><p class="sec-label" data-i="cold_label">— نوشیدنی‌های سرد —</p><h2 class="sec-title" data-i="cold_title">نوشیدنی سرد</h2><div class="sec-orn"></div></div>
+    <div class="mgrid">
+      <div class="mi rv d1"><div class="mi-num">01</div><div class="mi-name" data-i="c1n">Cold Brew</div><div class="mi-local" data-i="c1l">کولد برو</div><div class="mi-desc" data-i="c1d">دم‌آوری ۲۴ ساعته در آب سرد — طعمی صاف بدون تلخی</div><div class="mi-foot"><span class="mi-price">۶۵,۰۰۰ ت</span><span class="mi-tag" data-i="tCold">سرد</span></div></div>
+      <div class="mi rv d2"><div class="mi-num">02</div><div class="mi-name" data-i="c2n">Iced Latte</div><div class="mi-local" data-i="c2l">آیس لاته</div><div class="mi-desc" data-i="c2d">اسپرسو تازه روی یخ، شیر کامل — ساده و بی‌نقص</div><div class="mi-foot"><span class="mi-price">۶۰,۰۰۰ ت</span><span class="mi-tag" data-i="tCold">سرد</span></div></div>
+      <div class="mi rv d3"><div class="mi-num">03</div><div class="mi-name" data-i="c3n">Affogato</div><div class="mi-local" data-i="c3l">افوگاتو</div><div class="mi-desc" data-i="c3d">اسپرسو داغ روی بستنی وانیل — جایی که گرم و سرد هم می‌شوند</div><div class="mi-foot"><span class="mi-price">۸۰,۰۰۰ ت</span><span class="mi-tag" data-i="tDes">دسر</span></div></div>
+      <div class="mi rv d4"><div class="mi-num">04</div><div class="mi-name" data-i="c4n">Rose Cold Foam</div><div class="mi-local" data-i="c4l">کولد فوم گل محمدی</div><div class="mi-desc" data-i="c4d">کولد برو با فوم ابریشمی گل محمدی — ظریف و عطرآگین</div><div class="mi-foot"><span class="mi-price">۸۵,۰۰۰ ت</span><span class="mi-tag" data-i="tSig">امضا</span></div></div>
+      <div class="mi rv d5"><div class="mi-num">05</div><div class="mi-name" data-i="c5n">Matcha Latte</div><div class="mi-local" data-i="c5l">لاته ماچا</div><div class="mi-desc" data-i="c5d">پودر ماچای ژاپنی، شیر بادام، طعم گیاهی و خاکی</div><div class="mi-foot"><span class="mi-price">۷۵,۰۰۰ ت</span><span class="mi-tag" data-i="tCold">سرد</span></div></div>
+      <div class="mi rv d6"><div class="mi-num">06</div><div class="mi-name" data-i="c6n">Sparkling Espresso</div><div class="mi-local" data-i="c6l">اسپرسو گازدار</div><div class="mi-desc" data-i="c6d">اسپرسو روی آب گازدار با پوست لیمو — جسور و هیجان‌انگیز</div><div class="mi-foot"><span class="mi-price">۷۰,۰۰۰ ت</span><span class="mi-tag" data-i="tUniq">منحصربه‌فرد</span></div></div>
+    </div>
+  </div>
+  <div class="divider"><div class="dl"></div><div class="di">✦</div><div class="dl"></div></div>
+  <div class="menu-inner" id="bakery">
+    <div class="sec-head rv"><p class="sec-label" data-i="bak_label">— نانوایی و شیرینی —</p><h2 class="sec-title" data-i="bak_title">نان و شیرینی</h2><div class="sec-orn"></div></div>
+    <div class="mgrid">
+      <div class="mi rv d1"><div class="mi-num">01</div><div class="mi-name" data-i="b1n">Saffron Croissant</div><div class="mi-local" data-i="b1l">کروسان زعفران</div><div class="mi-desc" data-i="b1d">کروسان ورقه‌ورقه با فیلینگ کرم زعفرانی — رویای صبحگاهی</div><div class="mi-foot"><span class="mi-price">۵۵,۰۰۰ ت</span><span class="mi-tag" data-i="tFresh">تازه</span></div></div>
+      <div class="mi rv d2"><div class="mi-num">02</div><div class="mi-name" data-i="b2n">Nan-e Barbari</div><div class="mi-local" data-i="b2l">نان بربری</div><div class="mi-desc" data-i="b2d">نان بربری تازه با نیمرو، گردو و عسل طبیعی کوهستان</div><div class="mi-foot"><span class="mi-price">۶۵,۰۰۰ ت</span><span class="mi-tag" data-i="tTrad">سنتی</span></div></div>
+      <div class="mi rv d3"><div class="mi-num">03</div><div class="mi-name" data-i="b3n">Almond Tart</div><div class="mi-local" data-i="b3l">تارت بادام</div><div class="mi-desc" data-i="b3d">پوسته کره‌ای ترد با فرانژیپان بادام و مربای زردآلو</div><div class="mi-foot"><span class="mi-price">۷۰,۰۰۰ ت</span><span class="mi-tag" data-i="tPast">شیرینی</span></div></div>
+      <div class="mi rv d4"><div class="mi-num">04</div><div class="mi-name" data-i="b4n">Dark Chocolate Brownie</div><div class="mi-local" data-i="b4l">براونی شکلات تلخ</div><div class="mi-desc" data-i="b4d">شکلات ۷۲٪ بلژیکی، مرکز مایع — گناهی شیرین</div><div class="mi-foot"><span class="mi-price">۶۰,۰۰۰ ت</span><span class="mi-tag" data-i="tPast">شیرینی</span></div></div>
+      <div class="mi rv d5"><div class="mi-num">05</div><div class="mi-name" data-i="b5n">Pistachio Roll</div><div class="mi-local" data-i="b5l">رول پسته</div><div class="mi-desc" data-i="b5d">خمیر دانمارکی پیچیده با کرم پسته ایرانی و گلاب</div><div class="mi-foot"><span class="mi-price">۶۵,۰۰۰ ت</span><span class="mi-tag" data-i="tSig">امضا</span></div></div>
+      <div class="mi rv d6"><div class="mi-num">06</div><div class="mi-name" data-i="b6n">Sourdough Toast</div><div class="mi-local" data-i="b6l">توست خمیرترش</div><div class="mi-desc" data-i="b6d">نان خمیرترش خانگی، تست شده با کره نمکین و عسل آویشن</div><div class="mi-foot"><span class="mi-price">۵۰,۰۰۰ ت</span><span class="mi-tag" data-i="tFresh">تازه</span></div></div>
+    </div>
+  </div>
+  <footer>
+    <div class="fn">NAN DARBARI · نان درباری</div>
+    <p data-i="footer_tag">جایی که هر دانه داستانی دارد</p>
+  </footer>
+</div>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){cur.style.cssText=`left:px;top:px`;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.cssText=`left:px;top:px`;requestAnimationFrame(loop);})();
+
+// CANVAS
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+
+function lerp(a,b,t){return a+(b-a)*t;}
+function easeOut(t){return 1-Math.pow(1-t,3);}
+function easeIn(t){return t*t*t;}
+function clamp01(v){return Math.max(0,Math.min(1,v));}
+function lerpC(a,b,t){return[lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];}
+function rgb(c,a=1){return `rgba(,,,)`;}
+
+// Updated Canvas Palette to match Parisian Night
+const C = {
+  bg: [6, 11, 20],        // Deep Midnight Navy
+  bgMid: [11, 19, 32],    // Rich Navy
+  gold: [207, 161, 68],   // Elegant Gold
+  goldDim: [140, 106, 39], // Dark Bronze
+  ink: [253, 248, 237],
+  bean1: [140, 106, 39],  // Golden-bronze roasted tones
+  bean2: [80, 50, 20],
+  bean3: [40, 25, 10]
+};
+
+function drawBean(x,y,sz,angle,alpha){
+  ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha=alpha;
+  ctx.beginPath();ctx.ellipse(0,0,sz*.52,sz,0,0,Math.PI*2);
+  const g=ctx.createRadialGradient(-sz*.1,-sz*.2,sz*.05,0,0,sz*.9);
+  g.addColorStop(0,rgb(C.bean1));g.addColorStop(.5,rgb(C.bean2));g.addColorStop(1,rgb(C.bean3));
+  ctx.fillStyle=g;ctx.fill();
+  ctx.beginPath();ctx.moveTo(0,-sz*.7);ctx.bezierCurveTo(sz*.08,-sz*.25,sz*.08,sz*.25,0,sz*.7);
+  ctx.strokeStyle='rgba(8,4,1,.7)';ctx.lineWidth=sz*.05;ctx.stroke();
+  ctx.restore();
+}
+
+function drawSteam(cx,cy,alpha){
+  for(let i=0;i<3;i++){
+    const ox=(i-1)*20,t=Date.now()*.001;
+    ctx.save();ctx.globalAlpha=alpha*.35;ctx.beginPath();
+    ctx.moveTo(cx+ox,cy);
+    ctx.bezierCurveTo(cx+ox+Math.sin(t+i)*10,cy-50,cx+ox-Math.sin(t+i+1)*10,cy-100,cx+ox,cy-130);
+    const sg=ctx.createLinearGradient(0,cy,0,cy-130);
+    sg.addColorStop(0,rgb(C.gold,.6));sg.addColorStop(1,rgb(C.gold,0));
+    ctx.strokeStyle=sg;ctx.lineWidth=7+i*2;ctx.stroke();ctx.restore();
+  }
+}
+
+function drawCup(cx,cy,fillPct,alpha){
+  const w=100,h=90;ctx.save();ctx.globalAlpha=alpha;
+  const sg=ctx.createRadialGradient(cx,cy+h/2+8,0,cx,cy+h/2+8,w/2+18);
+  sg.addColorStop(0,rgb(C.gold,.15));sg.addColorStop(1,rgb(C.gold,0));
+  ctx.fillStyle=sg;ctx.beginPath();ctx.ellipse(cx,cy+h/2+8,w/2+16,9,0,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.moveTo(cx-w/2,cy-h/2);ctx.lineTo(cx-w/2+14,cy+h/2);ctx.lineTo(cx+w/2-14,cy+h/2);ctx.lineTo(cx+w/2,cy-h/2);ctx.closePath();
+  const bg=ctx.createLinearGradient(cx-w/2,0,cx+w/2,0);bg.addColorStop(0,'#060B14');bg.addColorStop(.38,'#0F1A2C');bg.addColorStop(1,'#060B14');
+  ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle=rgb(C.gold,.3);ctx.lineWidth=1.5;ctx.stroke();
+  if(fillPct>0){
+    const lh=Math.max(4,(h-4)*fillPct),ly=cy+h/2-2-lh,tw=(w-28)*(1-fillPct*.5)+14;
+    ctx.beginPath();ctx.moveTo(cx-tw/2,ly);ctx.lineTo(cx+tw/2,ly);ctx.lineTo(cx+w/2-16,cy+h/2-2);ctx.lineTo(cx-w/2+16,cy+h/2-2);ctx.closePath();
+    const lg=ctx.createLinearGradient(0,ly,0,cy+h/2);lg.addColorStop(0,'rgba(55,30,10,.92)');lg.addColorStop(1,'rgba(28,14,4,.96)');ctx.fillStyle=lg;ctx.fill();
+    ctx.beginPath();ctx.ellipse(cx,ly+3,tw/2-3,4,0,0,Math.PI*2);
+    const cg=ctx.createRadialGradient(cx-6,ly,0,cx,ly+3,tw/2);cg.addColorStop(0,rgb(C.gold,.65));cg.addColorStop(1,rgb(C.gold,.12));ctx.fillStyle=cg;ctx.fill();
+  }
+  ctx.beginPath();ctx.arc(cx+w/2+16,cy+6,20,-0.55,0.55);ctx.strokeStyle=rgb(C.gold,.35);ctx.lineWidth=6;ctx.stroke();
+  ctx.restore();
+}
+
+const BEANS=[];
+for(let i=0;i<30;i++) BEANS.push({x:Math.random(),y:Math.random(),sz:11+Math.random()*18,angle:Math.random()*Math.PI*2,vx:(Math.random()-.5)*.0007,vy:(Math.random()-.5)*.0007,va:(Math.random()-.5)*.0025,alpha:.3+Math.random()*.6});
+
+let tick=0;
+
+function scene0(p){
+  const bg=lerpC(C.bgMid,C.bg,p);
+  ctx.fillStyle=rgb(bg);ctx.fillRect(0,0,W,H);
+  const gr=ctx.createRadialGradient(W/2,H*.55,0,W/2,H*.55,400*p+10);
+  gr.addColorStop(0,rgb(C.gold,.15*p));gr.addColorStop(.5,rgb(C.gold,.04*p));gr.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);
+  const bSz=lerp(0,62,easeOut(p)),by=H*.5+lerp(H*.22,0,easeOut(p));
+  if(bSz>0) drawBean(W/2,by,bSz,Math.PI*.08+p*.25,easeOut(p));
+}
+
+function scene1(p){
+  ctx.fillStyle=rgb(C.bg);ctx.fillRect(0,0,W,H);
+  const ag=ctx.createRadialGradient(W/2,H*.42,0,W/2,H*.42,W*.4);
+  ag.addColorStop(0,rgb(C.gold,.12*p));ag.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=ag;ctx.fillRect(0,0,W,H);
+  BEANS.forEach((b,i)=>{
+    b.x+=b.vx;b.y+=b.vy;b.angle+=b.va;
+    if(b.x<-.1)b.x=1.1;if(b.x>1.1)b.x=-.1;if(b.y<-.1)b.y=1.1;if(b.y>1.1)b.y=-.1;
+    drawBean(b.x*W,b.y*H,b.sz,b.angle,b.alpha*clamp01((p-.018*i)*3));
+  });
+}
+
+function scene2(p){
+  ctx.fillStyle=rgb(C.bg);ctx.fillRect(0,0,W,H);
+  const hg=ctx.createRadialGradient(W/2,H+60,30,W/2,H+60,H*.8);
+  hg.addColorStop(0,rgb(C.gold,.25*Math.min(p*2,1)));hg.addColorStop(.6,rgb(C.gold,.06*Math.min(p*2,1)));hg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=hg;ctx.fillRect(0,0,W,H);
+  const cols=5,rows=4;
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+    const bx=(c+.5)/cols*W,by2=(r+.5)/rows*H,t2=tick*.0014+r*.18+c*.14;
+    const sh=p>.5?lerp(1,0,easeIn((p-.5)*2)):1;
+    if(sh>.02) drawBean(bx+Math.sin(t2)*4*p,by2+Math.cos(t2*1.4)*3*p,14*sh,.3+Math.sin(t2*.5)*.2,.7*sh);
+  }
+  if(p>.4){
+    const sp=clamp01((p-.4)/.6),pc=Math.floor(120*sp);
+    for(let i=0;i<pc;i++){
+      const a=(i/pc)*Math.PI*2,r2=(W*.08+Math.random()*W*.32)*(.4+Math.random()*.6);
+      ctx.save();ctx.globalAlpha=(.2+Math.random()*.5)*sp;ctx.beginPath();
+      ctx.arc(W/2+Math.cos(a+tick*.002)*r2,H/2+Math.sin(a*1.3+tick*.0015)*r2*.55,1.2+Math.random()*2.2,0,Math.PI*2);
+      ctx.fillStyle=rgb(lerpC(C.gold,C.ink,Math.random()*.5));ctx.fill();ctx.restore();
+    }
+    for(let i=0;i<4;i++){
+      const lx=W*.2+i*(W*.2);ctx.save();ctx.globalAlpha=sp*.15;
+      const wg=ctx.createLinearGradient(0,H*.72,0,H*.1);wg.addColorStop(0,rgb(C.gold,.7));wg.addColorStop(1,rgb(C.gold,0));
+      ctx.strokeStyle=wg;ctx.lineWidth=3;ctx.beginPath();const wv=tick*.0012+i;
+      ctx.moveTo(lx,H*.76);ctx.bezierCurveTo(lx+Math.sin(wv)*16,H*.52,lx-Math.sin(wv)*16,H*.3,lx,H*.1);
+      ctx.stroke();ctx.restore();
+    }
+  }
+}
+
+function scene3(p){
+  ctx.fillStyle=rgb(C.bg);ctx.fillRect(0,0,W,H);
+  const cx2=W/2,cy2=H*.5;
+  const bg=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,W*.45);
+  bg.addColorStop(0,rgb(C.bgMid,p*.8));bg.addColorStop(.5,rgb(C.bg,.9*p));bg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  drawCup(cx2,cy2+28,p,p);
+  if(p>.15) drawSteam(cx2,cy2-20,clamp01((p-.15)/.85)*.85);
+  if(p>.45){
+    const lp=clamp01((p-.45)/.55),lw=lerp(0,W*.26,easeOut(lp));
+    ctx.save();ctx.globalAlpha=lp*.5;
+    ctx.beginPath();ctx.moveTo(cx2-lw/2,cy2-82);ctx.lineTo(cx2+lw/2,cy2-82);
+    ctx.strokeStyle=rgb(C.gold,.45);ctx.lineWidth=.8;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx2-lw/2*.55,cy2-72);ctx.lineTo(cx2+lw/2*.55,cy2-72);
+    ctx.strokeStyle=rgb(C.gold,.25);ctx.lineWidth=.6;ctx.stroke();ctx.restore();
+  }
+}
+
+const SCENES=[scene0,scene1,scene2,scene3];
+const NUM_SCENES=SCENES.length;
+let scrollP=0;
+function getScrollP(){const w=document.getElementById('cinematic-wrap');return Math.min(1,Math.max(0,window.scrollY/(w.offsetHeight-window.innerHeight)));}
+function getScene(p){const raw=p*NUM_SCENES,si=Math.min(Math.floor(raw),NUM_SCENES-1);return{si,sp:raw-Math.floor(raw)};}
+function updateTexts(si,sp){for(let i=0;i<NUM_SCENES;i++){const el=document.getElementById('s'+i);if(el)el.classList.toggle('active',i===si&&sp>.08&&sp<.88);}}
+
+const scrollInd=document.getElementById('scroll-ind'),langSw=document.getElementById('lang-sw'),glassNav=document.getElementById('glass-nav');
+let navShown=false;
+window.addEventListener('scroll',()=>{
+  scrollP=getScrollP();
+  scrollInd.style.opacity=scrollP>.02?'0':'1';
+  document.getElementById('prog-bar').style.width=(scrollP*100)+'%';
+  if(scrollP>=.999&&!navShown){navShown=true;glassNav.classList.add('show');}
+  else if(scrollP<.999&&navShown){navShown=false;glassNav.classList.remove('show');}
+  updateActiveNav();
+});
+langSw.classList.add('show');
+
+const gnavBtns=document.querySelectorAll('.gn-btn'),pill=document.getElementById('gnav-pill');
+function movePillTo(btn){const ir=document.querySelector('.gnav-inner').getBoundingClientRect(),br=btn.getBoundingClientRect();pill.style.left=(br.left-ir.left)+'px';pill.style.width=br.width+'px';}
+gnavBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    gnavBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');movePillTo(btn);
+    // Adjusted scroll offset to match the new top nav height
+    const target = document.getElementById(btn.dataset.target);
+    if(target) {
+        const y = target.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({top: y, behavior: 'smooth'});
+    }
+  });
+});
+function updateActiveNav(){let cur2='hot';['hot','cold','bakery'].forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-300)cur2=id;});gnavBtns.forEach(btn=>{const a=btn.dataset.target===cur2;btn.classList.toggle('active',a);if(a)movePillTo(btn);});}
+window.addEventListener('load',()=>{const a=document.querySelector('.gn-btn.active');if(a)movePillTo(a);});
+
+function render(){tick++;const{si,sp}=getScene(scrollP);const fz=.1;if(sp>1-fz&&si<NUM_SCENES-1){SCENES[si](sp);ctx.save();ctx.globalAlpha=(sp-(1-fz))/fz;SCENES[si+1](0);ctx.restore();}else{SCENES[si](sp);}updateTexts(si,sp);requestAnimationFrame(render);}
+render();
+
+const rvObs=new IntersectionObserver(e=>e.forEach(e2=>{if(e2.isIntersecting)e2.target.classList.add('vis')}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(e=>rvObs.observe(e));
+
+const T={fa:{nav_hot:'نوشیدنی گرم',nav_cold:'نوشیدنی سرد',nav_bakery:'نان و شیرینی',hot_label:'— نوشیدنی‌های گرم —',hot_title:'نوشیدنی گرم',cold_label:'— نوشیدنی‌های سرد —',cold_title:'نوشیدنی سرد',bak_label:'— نانوایی و شیرینی —',bak_title:'نان و شیرینی',h1n:'اسپرسو',h1l:'Espresso',h1d:'دانه‌های منتخب برزیل، تفت‌داده با دقت — تلخ و عمیق',h2n:'کورتادو',h2l:'Cortado',h2d:'تعادل بی‌نقص میان اسپرسو و شیر گرم بخارپز',h3n:'فلت وایت',h3l:'Flat White',h3d:'دو شات اسپرسو، میکروفوم ابریشمی — کرمی و قوی',h4n:'پوراور',h4l:'Pour Over',h4d:'دم‌آوری آهسته، طعمی شفاف از قهوه‌های تک‌خاستگاه',h5n:'کاپوچینو',h5l:'Cappuccino',h5d:'فوم غلیظ و کشدار، سه لایه‌ی کلاسیک ایتالیایی',h6n:'لاته هل',h6l:'Cardamom Latte',h6d:'ترکیب لاته نرم با هل سبز تازه — امضای نان درباری',c1n:'کولد برو',c1l:'Cold Brew',c1d:'دم‌آوری ۲۴ ساعته در آب سرد — طعمی صاف بدون تلخی',c2n:'آیس لاته',c2l:'Iced Latte',c2d:'اسپرسو تازه روی یخ، شیر کامل — ساده و بی‌نقص',c3n:'افوگاتو',c3l:'Affogato',c3d:'اسپرسو داغ روی بستنی وانیل — جایی که گرم و سرد هم می‌شوند',c4n:'کولد فوم گل محمدی',c4l:'Rose Cold Foam',c4d:'کولد برو با فوم ابریشمی گل محمدی — ظریف و عطرآگین',c5n:'لاته ماچا',c5l:'Matcha Latte',c5d:'پودر ماچای ژاپنی، شیر بادام، طعم گیاهی و خاکی',c6n:'اسپرسو گازدار',c6l:'Sparkling Espresso',c6d:'اسپرسو روی آب گازدار با پوست لیمو — جسور و هیجان‌انگیز',b1n:'کروسان زعفران',b1l:'Saffron Croissant',b1d:'کروسان ورقه‌ورقه با فیلینگ کرم زعفرانی — رویای صبحگاهی',b2n:'نان بربری',b2l:'Nan-e Barbari',b2d:'نان بربری تازه با نیمرو، گردو و عسل طبیعی کوهستان',b3n:'تارت بادام',b3l:'Almond Tart',b3d:'پوسته کره‌ای ترد با فرانژیپان بادام و مربای زردآلو',b4n:'براونی شکلات تلخ',b4l:'Dark Chocolate Brownie',b4d:'شکلات ۷۲٪ بلژیکی، مرکز مایع — گناهی شیرین',b5n:'رول پسته',b5l:'Pistachio Roll',b5d:'خمیر دانمارکی پیچیده با کرم پسته ایرانی و گلاب',b6n:'توست خمیرترش',b6l:'Sourdough Toast',b6d:'نان خمیرترش خانگی، تست شده با کره نمکین و عسل آویشن',tHot:'گرم',tCold:'سرد',tSpec:'ویژه',tSig:'امضا',tDes:'دسر',tFresh:'تازه',tTrad:'سنتی',tPast:'شیرینی',tUniq:'منحصربه‌فرد',footer_tag:'جایی که هر دانه داستانی دارد'},en:{nav_hot:'Hot Drinks',nav_cold:'Cold Drinks',nav_bakery:'Bread & Pastry',hot_label:'— Hot Beverages —',hot_title:'Hot Drinks',cold_label:'— Cold Beverages —',cold_title:'Cold Drinks',bak_label:'— Bread & Pastry —',bak_title:'Bread & Pastry',h1n:'Espresso',h1l:'اسپرسو',h1d:'Single origin Brazil, precision roasted — bold and deep',h2n:'Cortado',h2l:'کورتادو',h2d:'Perfect balance of espresso and steamed milk',h3n:'Flat White',h3l:'فلت وایت',h3d:'Double shot, silky microfoam — creamy and strong',h4n:'Pour Over',h4l:'پوراور',h4d:'Slow brew, bright and delicate from single origin beans',h5n:'Cappuccino',h5l:'کاپوچینو',h5d:'Thick velvety foam, classic Italian three layers',h6n:'Cardamom Latte',h6l:'لاته هل',h6d:'Soft latte with fresh green cardamom — Nan Darbari signature',c1n:'Cold Brew',c1l:'کولد برو',c1d:'24-hour cold steep — smooth and clean with no bitterness',c2n:'Iced Latte',c2l:'آیس لاته',c2d:'Fresh espresso over ice, whole milk — simple and perfect',c3n:'Affogato',c3l:'افوگاتو',c3d:'Hot espresso over vanilla ice cream — where hot meets cold',c4n:'Rose Cold Foam',c4l:'کولد فوم گل محمدی',c4d:'Cold brew with silky rose water cold foam — delicate and fragrant',c5n:'Matcha Latte',c5l:'لاته ماچا',c5d:'Japanese matcha powder, almond milk — earthy and herbal',c6n:'Sparkling Espresso',c6l:'اسپرسو گازدار',c6d:'Espresso over sparkling water with lemon zest — bold and exciting',b1n:'Saffron Croissant',b1l:'کروسان زعفران',b1d:'Flaky layers filled with saffron cream — a morning dream',b2n:'Nan-e Barbari',b2l:'نان بربری',b2d:'Fresh Persian flatbread with egg, walnut and mountain honey',b3n:'Almond Tart',b3l:'تارت بادام',b3d:'Buttery pastry shell with almond frangipane and apricot jam',b4n:'Dark Chocolate Brownie',b4l:'براونی شکلات تلخ',b4d:'72% Belgian chocolate, molten center — a sweet sin',b5n:'Pistachio Roll',b5l:'رول پسته',b5d:'Danish pastry rolled with Iranian pistachio cream and rosewater',b6n:'Sourdough Toast',b6l:'توست خمیرترش',b6d:'House-made sourdough, toasted with salted butter and thyme honey',tHot:'Hot',tCold:'Cold',tSpec:'Specialty',tSig:'Signature',tDes:'Dessert',tFresh:'Fresh',tTrad:'Traditional',tPast:'Pastry',tUniq:'Unique',footer_tag:'Where every grain tells a story'},tr:{nav_hot:'Sıcak İçecekler',nav_cold:'Soğuk İçecekler',nav_bakery:'Ekmek & Pasta',hot_label:'— Sıcak İçecekler —',hot_title:'Sıcak İçecekler',cold_label:'— Soğuk İçecekler —',cold_title:'Soğuk İçecekler',bak_label:'— Ekmek & Hamur İşleri —',bak_title:'Ekmek & Pasta',h1n:'Espresso',h1l:'اسپرسو',h1d:'Brezilya tek kökenli, hassas kavrulmuş — yoğun ve derin',h2n:'Cortado',h2l:'کورتادو',h2d:'Espresso ile buharlı sütün mükemmel dengesi',h3n:'Flat White',h3l:'فلت وایت',h3d:'Çift shot, ipeksi mikroköpük — kremsi ve güçlü',h4n:'Pour Over',h4l:'پوراور',h4d:'Yavaş demleme, tek kökenli çekirdeklerden parlak tat',h5n:'Cappuccino',h5l:'کاپوچینو',h5d:'Kalın kadifemsi köpük, klasik İtalyan üç katmanı',h6n:'Kakule Latte',h6l:'لاته هل',h6d:'Taze yeşil kakule ile yumuşak latte — Nan Darbari imzası',c1n:'Cold Brew',c1l:'کولد برو',c1d:'24 saatlik soğuk demleme — pürüzsüz ve acısız',c2n:'Buzlu Latte',c2l:'آیس لاته',c2d:'Buzun üzerine taze espresso, tam yağlı süt — sade ve kusursuz',c3n:'Affogato',c3l:'افوگاتو',c3d:'Vanilyalı dondurmanın üzerine sıcak espresso',c4n:'Gül Soğuk Köpük',c4l:'کولد فوم گل محمدی',c4d:'Gül suyu soğuk köpüklü cold brew — zarif ve kokulu',c5n:'Matcha Latte',c5l:'لاته ماچا',c5d:'Japon matcha tozu, badem sütü — toprak ve bitki aroması',c6n:'Köpüklü Espresso',c6l:'اسپرسو گازدار',c6d:'Limon kabuğuyla köpüklü su üzerinde espresso',b1n:'Safran Kruvasanı',b1l:'کروسان زعفران',b1d:'Safran kremalı çıtır katmanlar — sabah rüyası',b2n:'Barberi Ekmeği',b2l:'نان بربری',b2d:'Taze İran ekmeği yumurta, ceviz ve dağ balı ile',b3n:'Badem Tart',b3l:'تارت بادام',b3d:'Tereyağlı hamur, badem frangipane ve kayısı reçeli',b4n:'Bitter Çikolatalı Brownie',b4l:'براونی شکلات تلخ',b4d:'%72 Belçika çikolatası, akışkan merkez — tatlı bir günah',b5n:'Antep Fıstıklı Rulo',b5l:'رول پسته',b5d:'Gül suyu ve İran fıstık kremalı Danimarkalı hamur',b6n:'Ekşi Maya Tostu',b6l:'توست خمیرترش',b6d:'Ev yapımı ekşi maya ekmeği, tuzlu tereyağı ve kekik balı ile',tHot:'Sıcak',tCold:'Soğuk',tSpec:'Özel',tSig:'İmza',tDes:'Tatlı',tFresh:'Taze',tTrad:'Geleneksel',tPast:'Pastane',tUniq:'Eşsiz',footer_tag:'Her tanenin bir hikayesi var'}};
+
+function setLang(lang){document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('active',b.textContent.trim()===lang.toUpperCase()));document.documentElement.dir=lang==='fa'?'rtl':'ltr';document.documentElement.lang=lang;const t=T[lang];document.querySelectorAll('[data-i]').forEach(el=>{const k=el.getAttribute('data-i');if(t[k])el.textContent=t[k];});setTimeout(()=>{const a=document.querySelector('.gn-btn.active');if(a)movePillTo(a);},50);}
+setLang('fa');
+</script>
+
+</body>
+</html>
