@@ -12,9 +12,9 @@
 <title>کافه نان درباری | Nan Darbari</title>
 
 <!-- Fonts: Vazirmatn (FA) + Cormorant/Cinzel (EN/TR) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+<link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;700&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;700&display=swap)" rel="stylesheet">
 
 <style>
 :root {
@@ -46,7 +46,7 @@ html[lang="fa"] .cinzel-font { font-family: 'Vazirmatn', sans-serif; font-weight
 /* Subtle Noise Texture */
 body::after {
   content: ''; position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='[http://www.w3.org/2000/svg'%3E%3Cfilter](http://www.w3.org/2000/svg'%3E%3Cfilter) id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   opacity: 0.025; pointer-events: none; z-index: 9999; mix-blend-mode: overlay;
 }
 
@@ -473,13 +473,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function clamp01(v){return Math.max(0,Math.min(1,v));}
   function easeOut(t){return 1-Math.pow(1-t,3);}
-  function rgb(c,a=1){return `rgba(,,,)`;}
+  function rgb(c,a=1){return `rgba(${c[0]},${c[1]},${c[2]},${a})`;}
 
   const C = { bg: [2, 4, 9], bgMid: [8, 16, 30], gold: [212, 175, 55], goldDim: [117, 94, 29], bean1: [212, 175, 55], bean2: [117, 94, 29], bean3: [30, 20, 10] };
 
   function createGlow(x, y, r, alpha) {
     const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-    g.addColorStop(0, `rgba(212, 175, 55, )`); g.addColorStop(0.3, `rgba(212, 175, 55, )`); g.addColorStop(1, 'rgba(212, 175, 55, 0)'); return g;
+    g.addColorStop(0, `rgba(212, 175, 55, ${alpha})`); g.addColorStop(0.3, `rgba(212, 175, 55, ${alpha * 0.4})`); g.addColorStop(1, 'rgba(212, 175, 55, 0)'); return g;
   }
 
   function drawBean(x, y, sz, angle, alpha) {
@@ -528,7 +528,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   let tick = 0;
 
-  // FIX #3: Scene 0 now renders the bean immediately
   function scene0(p){
     ctx.fillStyle = rgb(C.bgMid, 1-p); 
     ctx.fillRect(0,0,W,H);
@@ -538,7 +537,6 @@ document.addEventListener("DOMContentLoaded", function() {
     ctx.fillStyle = gr; 
     ctx.fillRect(0,0,W,H);
     
-    // Bean is always visible from the first frame
     const bSz = 38 + easeOut(p) * 55;
     drawBean(W/2, H*0.5, bSz, Math.PI*0.1 + p*0.4, 0.75 + easeOut(p) * 0.25);
   }
@@ -603,7 +601,6 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener('scroll',()=>{
     if(!tickingScroll) {
       requestAnimationFrame(() => {
-        // UI updates based on current scrollP
         if(scrollInd) scrollInd.style.opacity = scrollP > 0.05 ? '0' : '1';
         if(skipMenu) {
           if(scrollP > 0.05 && scrollP < 0.9) skipMenu.classList.add('show');
@@ -623,7 +620,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // FIX #1: Render loop - removed reduce motion block & added scrollP sync
+  // Render loop - removed reduce motion block & added scrollP sync
   function render(){
     if(ctx && isCanvasActive) {
       tick++;
@@ -654,8 +651,8 @@ document.addEventListener("DOMContentLoaded", function() {
   if(cur && ring) {
     document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
     (function cursorLoop(){
-      cur.style.transform=`translate3d(px, px, 0)`;
-      rx+=(mx-rx)*.15;ry+=(my-ry)*.15; ring.style.transform=`translate3d(px, px, 0)`;
+      cur.style.transform=`translate3d(${mx-2}px, ${my-2}px, 0)`;
+      rx+=(mx-rx)*.15;ry+=(my-ry)*.15; ring.style.transform=`translate3d(${rx-14}px, ${ry-14}px, 0)`;
       requestAnimationFrame(cursorLoop);
     })();
   }
