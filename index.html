@@ -7,14 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="منوی کافه نان درباری؛ نوشیدنی‌های گرم، سرد، نان و شیرینی تازه با تجربه‌ای لوکس و اصیل.">
 <meta property="og:title" content="کافه نان درباری | Nan Darbari">
-<meta property="og:description" content="منوی لوکس نان درباری با قهوه تخصصی و نان و شیرینی تازه. از تنور تا فنجان.">
+<meta property="og:description" content="منوی لوکس نان درباری با قهوه تخصصی و نان و شیرینی تازه. نان داغ، قهوه شیک.">
 <meta property="og:type" content="website">
 <title>کافه نان درباری | Nan Darbari</title>
 
 <!-- Fonts: Vazirmatn (FA) + Cormorant/Cinzel (EN/TR) -->
-<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-<link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;700&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;700&display=swap)" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -42,11 +42,12 @@ html[lang="en"] body, html[lang="tr"] body { font-family: 'Cormorant Garamond', 
 
 .cinzel-font { font-family: 'Cinzel', serif; }
 html[lang="fa"] .cinzel-font { font-family: 'Vazirmatn', sans-serif; font-weight: 700; }
+.eng-title { font-family: 'Cinzel', serif !important; direction: ltr; }
 
 /* Subtle Noise Texture */
 body::after {
   content: ''; position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='[http://www.w3.org/2000/svg'%3E%3Cfilter](http://www.w3.org/2000/svg'%3E%3Cfilter) id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   opacity: 0.025; pointer-events: none; z-index: 9999; mix-blend-mode: overlay;
 }
 
@@ -58,7 +59,7 @@ body::after {
   #cur-ring { width:28px;height:28px;border:1px solid rgba(212, 175, 55, 0.5);border-radius:50%;position:fixed;pointer-events:none;z-index:99998;transition:transform .1s ease-out; }
 }
 
-/* Language Switcher */
+/* Language Switcher - FIXED DIRECTION TO PREVENT JUMPING */
 #lang-sw { position:fixed; top:2rem; left:2rem; z-index:200; display:flex; gap:.2rem; padding:.3rem; border-radius:999px; background:var(--glass-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid var(--glass-brd); opacity:0; transition:opacity .6s; }
 #lang-sw.show { opacity:1; }
 .lb { background:none; border:none; color:rgba(253, 251, 245, 0.5); font-size:.65rem; font-weight:500; letter-spacing:.1em; padding:.4rem .8rem; transition:all .3s; border-radius:999px; cursor: pointer; }
@@ -66,30 +67,22 @@ html[lang="en"] .lb, html[lang="tr"] .lb { font-family: 'Cinzel', serif; font-si
 .lb:hover { color:var(--ink); }
 .lb.active { color:var(--gold-light); background:rgba(212,175,55,.15); border:1px solid rgba(212,175,55,.3); }
 
-/* Cinematic Section (Height optimized for smoother scroll) */
+/* Cinematic Section */
 #cinematic-wrap { position:relative; height:340vh; z-index:1; }
 #cinematic-sticky { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; }
 #c { position:absolute; inset:0; width:100%; height:100%; display:block; }
 #vig { position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 10%,rgba(2,4,9,.85) 65%,rgba(2,4,9,1) 100%);z-index:5;pointer-events:none; }
 
-.scene-text { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;pointer-events:none;text-align:center; padding: 0 1.5rem;}
-.st-label { font-size:clamp(.65rem,1.2vw,.85rem);letter-spacing:.4em;color:var(--gold);text-transform:uppercase;opacity:0;transform:translateY(15px);transition:all .7s ease; }
-html[lang="en"] .st-label, html[lang="tr"] .st-label { font-family: 'Cinzel', serif; letter-spacing: .6em; font-size:clamp(.55rem,1vw,.75rem);}
+/* Final Logo Styling (English Only) */
+#s-final { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;pointer-events:none;text-align:center; opacity:0; transform:translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.final-text { font-size:clamp(2.8rem,7vw,5.5rem);font-weight:700;color:var(--ink);line-height:1.1; margin:0; text-shadow: 0 0 50px rgba(212,175,55,0.5), 0 10px 40px rgba(0,0,0,1); letter-spacing: 0.1em; }
+.final-sub { display:block; font-size:clamp(0.8rem, 2vw, 1.2rem); letter-spacing: 0.8em; color:var(--gold); margin-top: 10px; font-weight: 400; text-indent: 0.8em;}
 
-.st-title { font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;color:var(--ink);line-height:1.2;margin:.5em 0 .3em;opacity:0;transform:translateY(20px);transition:all .9s .1s cubic-bezier(0.2, 0.8, 0.2, 1);text-shadow:0 10px 40px rgba(0,0,0,0.9); }
-html[lang="en"] .st-title, html[lang="tr"] .st-title { font-family: 'Cinzel', serif; font-weight: 400; letter-spacing: .05em;}
-
-.st-sub { font-size:clamp(1.1rem,2vw,1.4rem);color:var(--ink-soft);opacity:0;transform:translateY(15px);transition:all .9s .2s ease; font-weight:300; }
-html[lang="en"] .st-sub, html[lang="tr"] .st-sub { font-style: italic; letter-spacing: .15em; font-size:clamp(1rem,2vw,1.3rem);}
-
-/* Blue Screen Failsafe for Texts */
-.scene-text.active .st-label,.scene-text.active .st-title,.scene-text.active .st-sub { opacity:1;transform:translateY(0); }
-.scene-text#s0 { opacity: 1; } 
-
-/* Main Brand H1 styling */
-#s0 .st-title { font-size:clamp(3rem,8vw,6.5rem); color: var(--gold-light); }
-
-/* Custom Skip Button */
+/* Custom Skip Button with Pulse Effect */
+@keyframes softPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.3); }
+  50% { box-shadow: 0 0 25px rgba(212,175,55,0.4); border-color: rgba(212,175,55,0.6); }
+}
 #skip-menu {
   position: absolute;
   bottom: 7rem;
@@ -100,7 +93,7 @@ html[lang="en"] .st-sub, html[lang="tr"] .st-sub { font-style: italic; letter-sp
   color: var(--gold-light);
   border: 1px solid rgba(212,175,55,.4);
   border-radius: 999px;
-  padding: .75rem 1.5rem;
+  padding: .75rem 1.8rem;
   font-size: .85rem;
   letter-spacing: .1em;
   cursor: pointer;
@@ -109,22 +102,21 @@ html[lang="en"] .st-sub, html[lang="tr"] .st-sub { font-style: italic; letter-sp
   transition: all 0.4s ease;
   opacity: 0;
   pointer-events: none;
+  animation: softPulse 3s infinite ease-in-out;
 }
 html[lang="en"] #skip-menu, html[lang="tr"] #skip-menu { font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;}
-#skip-menu.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
-}
+#skip-menu.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 #skip-menu:hover { background: rgba(212,175,55,.25); border-color: var(--gold); }
 
-#scroll-ind { position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:1.2rem;transition:opacity .5s; pointer-events: none;}
-#scroll-ind span { font-size:.65rem;letter-spacing:.2em;color:rgba(212,175,55,0.7); }
-html[lang="en"] #scroll-ind span, html[lang="tr"] #scroll-ind span { font-family: 'Cinzel', serif; letter-spacing: .5em; font-size:.5rem;}
+/* Super Subtle Scroll Hint */
+#subtle-scroll { position:absolute; bottom:3.5rem; left:50%; transform:translateX(-50%); z-index:20; display:flex; flex-direction:column; align-items:center; transition:opacity 0.6s ease; pointer-events:none; }
+.ss-track { width: 1px; height: 50px; background: rgba(255,255,255,0.1); position: relative; overflow: hidden; border-radius: 2px;}
+.ss-dot { width: 3px; height: 12px; background: var(--gold-light); position: absolute; left: -1px; top: -12px; border-radius: 3px; box-shadow: 0 0 8px var(--gold); animation: drop 2.5s infinite cubic-bezier(0.6, 0.05, 0.4, 1); }
+@keyframes drop { 0% { top: -12px; opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { top: 50px; opacity: 0; } }
 
-.sc-line { width:1px;height:45px;background:linear-gradient(180deg,var(--gold),transparent);animation:scPulse 2.5s infinite ease-in-out; }
-@keyframes scPulse { 0%,100%{opacity:.1; transform: scaleY(0.6); transform-origin: top;} 50%{opacity:1; transform: scaleY(1); transform-origin: top;} }
+/* Progress Bar */
 #prog-bar { position:absolute;bottom:0;left:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold));width:0%;z-index:20; transition: width 0.1s linear; }
+#prog-bar::after { content:''; position:absolute; right:0; top:-2px; width:6px; height:6px; border-radius:50%; background:var(--gold-light); box-shadow:0 0 8px var(--gold); }
 
 /* Navigation */
 #glass-nav { position:fixed;top:2rem;left:50%;transform:translateX(-50%) translateY(-150px);z-index:300;transition:transform .8s cubic-bezier(.19,1,.22,1),opacity .6s;opacity:0; max-width: 95vw; overflow-x: auto; scrollbar-width: none; }
@@ -162,23 +154,12 @@ html[lang="en"] .sec-title, html[lang="tr"] .sec-title { font-family: 'Cinzel', 
 .mgrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.8rem; }
 
 /* Elegant Menu Cards */
-.mi { 
-  background:var(--bg-card); border-radius:6px; position:relative; overflow:hidden; 
-  transition: transform .5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow .5s ease;
-  border: 1px solid rgba(212, 175, 55, 0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
+.mi { background:var(--bg-card); border-radius:6px; position:relative; overflow:hidden; transition: transform .5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow .5s ease; border: 1px solid rgba(212, 175, 55, 0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 .mi-content { padding:3.5rem 2.5rem; position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; min-height: 290px;}
-
-.mi::after { 
-  content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:1px; 
-  background:var(--gold); transition:width .6s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 3;
-}
+.mi::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:0; height:1px; background:var(--gold); transition:width .6s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 3; }
 
 @media (hover: hover) {
-  .mi:hover { 
-    transform: translateY(-8px); 
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.15) inset; 
-  }
+  .mi:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.15) inset; }
   .mi:hover::after { width:100%; }
 }
 
@@ -220,7 +201,7 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
 .rv { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .rv.vis { opacity:1; transform:translateY(0); }
 
-/* Accessibility & Print */
+/* Print */
 @media print {
   #cinematic-wrap, #glass-nav, #lang-sw, #skip-menu { display: none !important; }
   body { background: white; color: black; }
@@ -251,8 +232,8 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
 </head>
 <body>
 
-<!-- Language Switcher -->
-<div id="lang-sw" aria-label="Language Switcher">
+<!-- Language Switcher - DIR FIXED TO LTR SO BUTTONS DON'T JUMP -->
+<div id="lang-sw" aria-label="Language Switcher" dir="ltr">
   <button class="lb active" data-lang="fa" aria-label="Persian">FA</button>
   <button class="lb" data-lang="en" aria-label="English">EN</button>
   <button class="lb" data-lang="tr" aria-label="Turkish">TR</button>
@@ -275,27 +256,17 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
     <div id="vig"></div>
     <div id="prog-bar"></div>
     
-    <div class="scene-text active" id="s0">
-      <h1 class="st-title" data-i="hero_title" data-html="true">از تنور<br>تا فنجان</h1>
-      <p class="st-sub" data-i="hero_sub">نان، قهوه و اصالت</p>
-    </div>
-    <div class="scene-text" id="s1">
-      <p class="st-label" data-i="s1_lbl">پرده اول</p>
-      <h2 class="st-title" data-i="s1_title">اصالت خام</h2>
-      <p class="st-sub" data-i="s1_sub">میراث ارتفاعات</p>
-    </div>
-    <div class="scene-text" id="s2">
-      <p class="st-label" data-i="s2_lbl">پرده دوم</p>
-      <h2 class="st-title" data-i="s2_title">هنر تفت</h2>
-      <p class="st-sub" data-i="s2_sub">حرارت، زمان و تکامل</p>
-    </div>
-    <div class="scene-text" id="s3">
-      <p class="st-label" data-i="hero_lbl">NAN DARBARI</p>
-      <h2 class="st-title" data-i="s3_title" data-html="true" style="font-size:clamp(3rem,8vw,6.5rem); color:var(--gold-light);">نان<br>درباری</h2>
+    <!-- ONLY ONE TEXT: The Final English Logo -->
+    <div id="s-final">
+      <h2 class="final-text eng-title">NAN DARBARI<br><span class="final-sub">CAFE</span></h2>
     </div>
     
     <button id="skip-menu" data-i="skip" aria-label="Skip Introduction">مشاهده منو</button>
-    <div id="scroll-ind"><span data-i="scroll">Scroll</span><div class="sc-line"></div></div>
+    
+    <!-- Subtle Scroll Hint -->
+    <div id="subtle-scroll">
+      <div class="ss-track"><div class="ss-dot"></div></div>
+    </div>
   </div>
 </header>
 
@@ -303,8 +274,8 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
   <!-- Brand Story -->
   <section id="about-brand" class="rv">
     <p class="about-subtitle cinzel-font" data-i="hero_lbl">NAN DARBARI</p>
-    <h2 class="about-title" data-i="about_title">میراث طعم‌ها</h2>
-    <p class="about-desc" data-i="about_desc">نان درباری ترکیبی از عطر نان تازه، قهوه تخصصی و اصالت ایرانی است. جایی که سنت‌های پخت نان با هنر مدرن دم‌آوری قهوه گره می‌خورد تا تجربه‌ای لوکس و فراموش‌نشدنی خلق کند.</p>
+    <h2 class="about-title" data-i="about_title">اینجا فقط یک کافه نیست</h2>
+    <p class="about-desc" data-i="about_desc">نان درباری جایی است برای نان تازه، شیرینی گرم، قهوه خوش‌طعم و چند دقیقه آرامش. همه‌چیز طوری چیده شده که ساده نباشد؛ از بوی نان داغ تا فنجان قهوه‌ای که کنار آن می‌نشیند.</p>
   </section>
 
   <!-- Menu Structure -->
@@ -313,12 +284,12 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
     <section class="menu-inner" id="hot">
       <div class="sec-head rv"><p class="sec-label" data-i="cat_hot">— گرم —</p><h2 class="sec-title cinzel-font" data-i="hot_title">هنر دم‌آوری</h2><div class="sec-orn"></div></div>
       <div class="mgrid">
-        <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">01</div><h3 class="mi-name cinzel-font" data-i="h1n">Espresso</h3><p class="mi-local" data-i="h1l">اسپرسو</p><p class="mi-desc" data-i="h1d">عصاره‌گیری دقیق از دانه‌های عربیکا، بادی سنگین و کرمای طلایی.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h1p">۴۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div></div></article>
+        <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">01</div><h3 class="mi-name cinzel-font" data-i="h1n">Espresso</h3><p class="mi-local" data-i="h1l">اسپرسو</p><p class="mi-desc" data-i="h1d">اسپرسوی غلیظ و خوش‌عطر، مناسب شروع یک روز جدی.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h1p">۴۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div></div></article>
         <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">02</div><h3 class="mi-name cinzel-font" data-i="h2n">Americano</h3><p class="mi-local" data-i="h2l">آمریکانو</p><p class="mi-desc" data-i="h2d">دابل شات اسپرسو روی آب داغ، ملایم و طولانی.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h2p">۵۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div></div></article>
         <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">03</div><h3 class="mi-name cinzel-font" data-i="h3n">Flat White</h3><p class="mi-local" data-i="h3l">فلت وایت</p><p class="mi-desc" data-i="h3d">دو شات اسپرسو، میکروفوم ابریشمی — کرمی و قوی.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h3p">۶۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div></div></article>
         <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">04</div><h3 class="mi-name cinzel-font" data-i="h4n">Latte</h3><p class="mi-local" data-i="h4l">لاته</p><p class="mi-desc" data-i="h4d">اسپرسو ملایم با شیر بخارپز و فوم نرم.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h4p">۶۰٬۰۰۰ تومان</span><span class="mi-tag" data-i="cat_hot">گرم</span></div></div></article>
-        <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">05</div><h3 class="mi-name cinzel-font" data-i="h5n">Persian Coffee</h3><p class="mi-local" data-i="h5l">قهوه اصیل ایرانی</p><p class="mi-desc" data-i="h5d">دم‌آوری سنتی با ترکیب ادویه‌های گرم و هل سبز.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h5p">۵۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div></div></article>
-        <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">06</div><h3 class="mi-name cinzel-font" data-i="h6n">Cardamom Latte</h3><p class="mi-local" data-i="h6l">لاته هل</p><p class="mi-desc" data-i="h6d">ترکیب لاته نرم با هل سبز تازه — امضای نان درباری.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h6p">۶۸٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div></div></article>
+        <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">05</div><h3 class="mi-name cinzel-font" data-i="h5n">Persian Coffee</h3><p class="mi-local" data-i="h5l">قهوه اصیل ایرانی</p><p class="mi-desc" data-i="h5d">قهوه‌ای گرم و خوش‌عطر با رایحه هل؛ ساده، متفاوت و دلنشین.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h5p">۵۵٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div></div></article>
+        <article class="mi rv"><div class="mi-content"><div class="mi-num cinzel-font">06</div><h3 class="mi-name cinzel-font" data-i="h6n">Cardamom Latte</h3><p class="mi-local" data-i="h6l">لاته هل</p><p class="mi-desc" data-i="h6d">لاته‌ای نرم با رایحه هل؛ انتخابی خاص برای سلیقه‌های متفاوت.</p><div class="mi-foot"><span class="mi-price cinzel-font" data-i="h6p">۶۸٬۰۰۰ تومان</span><span class="mi-tag" data-i="tSig">امضا</span></div></div></article>
       </div>
     </section>
     
@@ -381,7 +352,7 @@ html[lang="en"] .f-logo p, html[lang="tr"] .f-logo p { font-size: .75rem; letter
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   
-  // Failsafe for Reveal Animations
+  // Reveal Animations
   setTimeout(() => { document.querySelectorAll('.rv').forEach(el => el.classList.add('vis')); }, 800);
 
   if ('IntersectionObserver' in window) {
@@ -391,16 +362,16 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.rv').forEach(e => rvObs.observe(e));
   }
 
-  // Skip Menu Button Logic
-  const skipMenu = document.getElementById('skip-menu');
-  if(skipMenu){
-    skipMenu.addEventListener('click', () => {
+  // Skip Menu Button
+  const skipMenuEl = document.getElementById('skip-menu');
+  if(skipMenuEl){
+    skipMenuEl.addEventListener('click', () => {
       const menu = document.getElementById('about-brand');
       if(menu) menu.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
-  // ROBUST MENU PILL LOGIC
+  // NAVIGATION PILL LOGIC
   const gnavBtns = document.querySelectorAll('.gn-btn');
   const pill = document.getElementById('gnav-pill');
   const innerNav = document.querySelector('.gnav-inner');
@@ -425,12 +396,25 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
+  // MENU HIGHLIGHT LOGIC - FIXED CALCULATION
   function updateActiveNav(){
     let currentId = 'hot';
-    ['hot','cold','bakery'].forEach(id => {
-      const section = document.getElementById(id);
-      if(section && window.scrollY >= (section.offsetTop - window.innerHeight/3)) currentId = id;
-    });
+    const sections = ['hot', 'cold', 'bakery'];
+    
+    // We check based on the middle of the screen to prevent jumping early
+    const triggerPoint = window.innerHeight * 0.5; 
+    
+    for(let i = sections.length - 1; i >= 0; i--){
+      const section = document.getElementById(sections[i]);
+      if(section) {
+        const rect = section.getBoundingClientRect();
+        if(rect.top <= triggerPoint) { 
+          currentId = sections[i];
+          break;
+        }
+      }
+    }
+    
     gnavBtns.forEach(btn => {
       const isActive = btn.dataset.target === currentId;
       btn.classList.toggle('active', isActive);
@@ -438,21 +422,23 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // CANVAS LOGIC (Optimized)
+  // CANVAS LOGIC - UNIFIED SMOOTH RENDERING
   const canvas = document.getElementById('c');
   let ctx, W, H, dpr;
   let isCanvasActive = true;
 
-  // Global scroll init
-  let scrollP=0;
+  // Real scroll position vs Smoothed scroll position
+  let targetScroll = 0;
+  let currentScroll = 0;
+
   function getScrollP(){
     const wrap = document.getElementById('cinematic-wrap'); if (!wrap) return 0;
     const maxScroll = wrap.offsetHeight - window.innerHeight; if(maxScroll <= 0) return 0;
-    return clamp01((window.scrollY || window.pageYOffset) / maxScroll);
+    return Math.max(0, Math.min(1, (window.scrollY || window.pageYOffset) / maxScroll));
   }
   
-  // Call immediately to set initial state
-  scrollP = getScrollP();
+  targetScroll = getScrollP();
+  currentScroll = targetScroll; // Start instantly at correct pos
 
   if(canvas) {
     ctx = canvas.getContext('2d', { alpha: false });
@@ -471,11 +457,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  function clamp01(v){return Math.max(0,Math.min(1,v));}
-  function easeOut(t){return 1-Math.pow(1-t,3);}
-  function rgb(c,a=1){return `rgba(${c[0]},${c[1]},${c[2]},${a})`;}
-
   const C = { bg: [2, 4, 9], bgMid: [8, 16, 30], gold: [212, 175, 55], goldDim: [117, 94, 29], bean1: [212, 175, 55], bean2: [117, 94, 29], bean3: [30, 20, 10] };
+  function rgb(c,a=1){return `rgba(${c[0]},${c[1]},${c[2]},${a})`;}
 
   function createGlow(x, y, r, alpha) {
     const g = ctx.createRadialGradient(x, y, 0, x, y, r);
@@ -493,7 +476,8 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function drawCup(cx, cy, fillPct, alpha) {
-    const w = 110, h = 100; ctx.save(); ctx.globalAlpha = alpha;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx, cy); ctx.scale(1.15, 1.15); ctx.translate(-cx, -cy);
+    const w = 110, h = 100; 
     const sg = ctx.createRadialGradient(cx, cy + h/2 + 10, 0, cx, cy + h/2 + 10, w/2 + 25);
     sg.addColorStop(0, rgb(C.gold, 0.2)); sg.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = sg;
     ctx.beginPath(); ctx.ellipse(cx, cy + h/2 + 10, w/2 + 22, 10, 0, 0, Math.PI*2); ctx.fill();
@@ -515,7 +499,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function drawSteam(cx, cy, alpha) {
     for (let i = 0; i < 4; i++) {
-      const ox = (i - 1.5) * 22, t = Date.now() * 0.0008; ctx.save(); ctx.globalAlpha = alpha * 0.4; ctx.beginPath();
+      const ox = (i - 1.5) * 22, t = Date.now() * 0.0008; ctx.save(); ctx.globalAlpha = Math.max(0, alpha * 0.4); ctx.beginPath();
       ctx.moveTo(cx + ox, cy); ctx.bezierCurveTo(cx + ox + Math.sin(t + i) * 15, cy - 60, cx + ox - Math.sin(t + i + 1) * 15, cy - 120, cx + ox, cy - 160);
       const sg = ctx.createLinearGradient(0, cy, 0, cy - 160); sg.addColorStop(0, rgb(C.gold, 0.7)); sg.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.strokeStyle = sg; ctx.lineWidth = 8 + i * 1.5; ctx.stroke(); ctx.restore();
@@ -524,157 +508,146 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const isMobile = window.innerWidth < 768;
   const BOKEH = [];
-  for(let i=0; i < (isMobile ? 12 : 30); i++){ BOKEH.push({ x: Math.random(), y: Math.random(), s: 5 + Math.random()*25, vy: -0.0005 - Math.random()*0.0015, vx: (Math.random()-0.5)*0.0005, phase: Math.random()*Math.PI*2 }); }
+  const bokehCount = isMobile ? 8 : 18;
+  for(let i=0; i < bokehCount; i++){ BOKEH.push({ x: Math.random(), y: Math.random(), s: 3 + Math.random()*12, vy: -0.0005 - Math.random()*0.0015, vx: (Math.random()-0.5)*0.0005, phase: Math.random()*Math.PI*2 }); }
 
   let tick = 0;
 
-  function scene0(p){
-    ctx.fillStyle = rgb(C.bgMid, 1-p); 
-    ctx.fillRect(0,0,W,H);
-    const gr = ctx.createRadialGradient(W/2, H*0.5, 0, W/2, H*0.5, Math.max(W,H));
-    gr.addColorStop(0, rgb(C.gold, 0.18 * (1-p)));
-    gr.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = gr; 
-    ctx.fillRect(0,0,W,H);
-    
-    const bSz = 38 + easeOut(p) * 55;
-    drawBean(W/2, H*0.5, bSz, Math.PI*0.1 + p*0.4, 0.75 + easeOut(p) * 0.25);
-  }
-
-  function scene1(p){ ctx.fillStyle = rgb(C.bg); ctx.fillRect(0,0,W,H); const sz = 100 + p*50; drawBean(W/2, H*0.5 + (p*100), sz, p*0.5, 1 - Math.pow(p, 4)); }
-
-  function scene2(p){
-    ctx.fillStyle = rgb(C.bg); ctx.fillRect(0,0,W,H);
-    const hg = ctx.createRadialGradient(W/2, H, 0, W/2, H, H); hg.addColorStop(0, rgb(C.gold, 0.15 * Math.sin(p*Math.PI))); hg.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = hg; ctx.fillRect(0,0,W,H);
-    const sp = clamp01(p * 1.5);
-    BOKEH.forEach(b => {
-      b.y += b.vy; b.x += b.vx; if(b.y < -0.1) b.y = 1.1; if(b.x < -0.1) b.x = 1.1; if(b.x > 1.1) b.x = -0.1;
-      const alpha = (0.2 + Math.sin(tick*0.02 + b.phase)*0.15) * sp;
-      ctx.beginPath(); ctx.arc(b.x*W, b.y*H, b.s, 0, Math.PI*2); ctx.fillStyle = createGlow(b.x*W, b.y*H, b.s*2, alpha); ctx.fill();
-    });
-  }
-
-  function scene3(p){
-    ctx.fillStyle = rgb(C.bg); ctx.fillRect(0,0,W,H);
-    const cx2 = W/2, cy2 = H*0.55; const bg = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, W*0.5);
-    bg.addColorStop(0, rgb(C.bgMid, p*0.85)); bg.addColorStop(0.6, rgb(C.bg, p)); bg.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
-
-    if (p > 0.1 && p < 0.95) {
-      const streamAlpha = Math.sin(clamp01((p - 0.1) / 0.85) * Math.PI); ctx.save(); ctx.globalAlpha = streamAlpha;
-      const str = ctx.createLinearGradient(cx2, -50, cx2, cy2 + 10); str.addColorStop(0, rgb(C.gold, 0.8)); str.addColorStop(1, rgb(C.goldDim, 0.9)); ctx.fillStyle = str;
-      const wobble = Math.sin(tick * 0.2) * 1.5; ctx.beginPath(); ctx.moveTo(cx2 - 2 + wobble, -50); ctx.lineTo(cx2 + 2 + wobble, -50); ctx.lineTo(cx2 + 1, cy2 + 15); ctx.lineTo(cx2 - 1, cy2 + 15); ctx.fill(); ctx.restore();
-    }
-    const fillPercentage = clamp01((p - 0.1) / 0.85); drawCup(cx2, cy2 + 20, fillPercentage, p);
-    if (p > 0.3) drawSteam(cx2, cy2 - 30, clamp01((p - 0.3) / 0.7));
-  }
-
-  const SCENES=[scene0, scene1, scene2, scene3]; const NUM_SCENES=SCENES.length;
-
-  function getScene(p){
-    const raw = p * NUM_SCENES, si = Math.min(Math.floor(raw), NUM_SCENES - 1); return { si, sp: raw - Math.floor(raw) };
-  }
-
-  function updateTexts(si, sp){
-    for(let i=0; i<NUM_SCENES; i++){
-      const el = document.getElementById('s'+i);
-      if(!el) continue;
-      let active = false;
-      if(i === 0 && si === 0 && sp < 0.9){
-        active = true;
-      } else {
-        active = i === si && sp > 0.1 && sp < 0.9;
-      }
-      el.classList.toggle('active', active);
-    }
-  }
-
-  const scrollInd=document.getElementById('scroll-ind'), glassNav=document.getElementById('glass-nav');
-  const langSw=document.getElementById('lang-sw');
-  let navShown=false;
-  
+  const scrollInd = document.getElementById('subtle-scroll');
+  const glassNav = document.getElementById('glass-nav');
+  const langSw = document.getElementById('lang-sw');
+  let navShown = false;
   if(langSw) langSw.classList.add('show');
 
-  // THROTTLED SCROLL LISTENER for UI updates
-  let tickingScroll = false;
+  // UI Updates via Scroll
   window.addEventListener('scroll',()=>{
-    if(!tickingScroll) {
-      requestAnimationFrame(() => {
-        if(scrollInd) scrollInd.style.opacity = scrollP > 0.05 ? '0' : '1';
-        if(skipMenu) {
-          if(scrollP > 0.05 && scrollP < 0.9) skipMenu.classList.add('show');
-          else skipMenu.classList.remove('show');
-        }
-        
-        const progBar = document.getElementById('prog-bar');
-        if(progBar) progBar.style.width = (scrollP*100) + '%';
-        
-        if(scrollP >= 0.45 && !navShown){ navShown=true; if(glassNav) glassNav.classList.add('show'); }
-        else if(scrollP < 0.45 && navShown){ navShown=false; if(glassNav) glassNav.classList.remove('show'); }
-        
-        updateActiveNav();
-        tickingScroll = false;
-      });
-      tickingScroll = true;
+    targetScroll = getScrollP();
+    
+    if(scrollInd) scrollInd.style.opacity = targetScroll > 0.02 ? '0' : '1';
+    
+    if(skipMenuEl) {
+      if(targetScroll > 0.05 && targetScroll < 0.9) skipMenuEl.classList.add('show');
+      else skipMenuEl.classList.remove('show');
     }
+    
+    const progBar = document.getElementById('prog-bar');
+    if(progBar) progBar.style.width = (targetScroll*100) + '%';
+    
+    if(targetScroll >= 0.45 && !navShown){ navShown=true; if(glassNav) glassNav.classList.add('show'); }
+    else if(targetScroll < 0.45 && navShown){ navShown=false; if(glassNav) glassNav.classList.remove('show'); }
+    
+    updateActiveNav();
   });
 
-  // Render loop - removed reduce motion block & added scrollP sync
+  // Unified, Lerped Continuous Render Loop (Zero Snapping)
   function render(){
     if(ctx && isCanvasActive) {
       tick++;
-      scrollP = getScrollP(); // Sync scroll constantly inside the loop
+      // LERP: Smoothly chase the target scroll position
+      currentScroll += (targetScroll - currentScroll) * 0.08; 
       
-      const { si, sp } = getScene(scrollP); const fadeZone = 0.15;
+      const sp = currentScroll;
       
-      if(sp > 1 - fadeZone && si < NUM_SCENES - 1){
-        SCENES[si](sp); 
-        ctx.save(); 
-        ctx.globalAlpha = (sp - (1 - fadeZone)) / fadeZone; 
-        SCENES[si+1](0); 
-        ctx.restore();
-      } else { 
-        SCENES[si](sp); 
+      // Base Background
+      ctx.fillStyle = rgb(C.bg); 
+      ctx.fillRect(0,0,W,H);
+
+      // Phase 1: The Bean (0.0 to 0.4) - Fluid math, no jumping
+      if (sp < 0.5) {
+        let p = sp / 0.5; // Normalized 0 to 1 for this phase
+        
+        // Background glow fading out
+        const gr = ctx.createRadialGradient(W/2, H*0.5, 0, W/2, H*0.5, Math.max(W,H));
+        gr.addColorStop(0, rgb(C.gold, 0.18 * (1-p)));
+        gr.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = gr; 
+        ctx.fillRect(0,0,W,H);
+        
+        // Super Smooth Bean Math
+        let sz = 38 + (p * 110); 
+        let angle = Math.PI*0.1 + (p * Math.PI * 1.5); 
+        let alpha = p < 0.8 ? 1 : 1 - ((p-0.8)/0.2); 
+        let yPos = H*0.5 + (p * H*0.1); 
+        
+        if (alpha > 0) drawBean(W/2, yPos, sz, angle, alpha);
       }
-      updateTexts(si, sp);
+
+      // Phase 2: Ambient Dust/Bokeh (0.2 to 0.8)
+      if (sp > 0.2 && sp < 0.9) {
+        let p = (sp - 0.2) / 0.7; // Normalized
+        let bokehAlpha = Math.sin(p * Math.PI); // Fades in then out
+        
+        BOKEH.forEach(b => {
+          b.y += b.vy; b.x += b.vx; if(b.y < -0.1) b.y = 1.1; if(b.x < -0.1) b.x = 1.1; if(b.x > 1.1) b.x = -0.1;
+          const alpha = (0.15 + Math.sin(tick*0.02 + b.phase)*0.1) * bokehAlpha;
+          ctx.beginPath(); ctx.arc(b.x*W, b.y*H, b.s, 0, Math.PI*2); ctx.fillStyle = createGlow(b.x*W, b.y*H, b.s*2, alpha); ctx.fill();
+        });
+      }
+
+      // Phase 3: The Cup & Final Logo (0.5 to 1.0)
+      if (sp > 0.5) {
+        let p = (sp - 0.5) / 0.5; // Normalized 0 to 1
+        const cx2 = W/2, cy2 = H*0.55;
+        
+        // Base Cup Glow
+        const bg = ctx.createRadialGradient(cx2, cy2, 0, cx2, cy2, W*0.5);
+        bg.addColorStop(0, rgb(C.bgMid, p*0.85)); bg.addColorStop(0.6, rgb(C.bg, p)); bg.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+        // Logo Golden Aura
+        const auraAlpha = Math.max(0, (sp - 0.7) / 0.3);
+        const glow = ctx.createRadialGradient(W/2, H*0.4, 0, W/2, H*0.4, W*0.4);
+        glow.addColorStop(0, `rgba(212, 175, 55, ${auraAlpha * 0.18})`);
+        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0,0,W,H);
+
+        // Coffee Stream
+        if (p > 0.1 && p < 0.9) {
+          const streamAlpha = Math.sin(Math.max(0, Math.min(1, (p - 0.1) / 0.8)) * Math.PI); 
+          ctx.save(); ctx.globalAlpha = streamAlpha;
+          const str = ctx.createLinearGradient(cx2, -50, cx2, cy2 + 10); str.addColorStop(0, rgb(C.gold, 0.8)); str.addColorStop(1, rgb(C.goldDim, 0.9)); ctx.fillStyle = str;
+          const wobble = Math.sin(tick * 0.2) * 1.5; ctx.beginPath(); ctx.moveTo(cx2 - 2 + wobble, -50); ctx.lineTo(cx2 + 2 + wobble, -50); ctx.lineTo(cx2 + 1, cy2 + 15); ctx.lineTo(cx2 - 1, cy2 + 15); ctx.fill(); ctx.restore();
+        }
+        
+        const fillPercentage = Math.max(0, Math.min(1, (p - 0.1) / 0.7)); 
+        drawCup(cx2, cy2 + 20, fillPercentage, p);
+        if (p > 0.3) drawSteam(cx2, cy2 - 35, Math.max(0, Math.min(1, (p - 0.3) / 0.7)));
+      }
+
+      // Handle Final Text HTML Element Opacity
+      const finalEl = document.getElementById('s-final');
+      if (finalEl) {
+        if (sp > 0.85) {
+           const textAlpha = Math.max(0, Math.min(1, (sp - 0.85) / 0.15));
+           finalEl.style.opacity = textAlpha;
+           finalEl.style.transform = `translateY(${(1-textAlpha)*20}px)`;
+        } else {
+           finalEl.style.opacity = 0;
+        }
+      }
     }
     requestAnimationFrame(render);
   }
   
-  updateTexts(0, 0); 
   requestAnimationFrame(render);
-
-  // DESKTOP CURSOR
-  const cur=document.getElementById('cur'), ring=document.getElementById('cur-ring');
-  let mx=0,my=0,rx=0,ry=0;
-  if(cur && ring) {
-    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-    (function cursorLoop(){
-      cur.style.transform=`translate3d(${mx-2}px, ${my-2}px, 0)`;
-      rx+=(mx-rx)*.15;ry+=(my-ry)*.15; ring.style.transform=`translate3d(${rx-14}px, ${ry-14}px, 0)`;
-      requestAnimationFrame(cursorLoop);
-    })();
-  }
 
   // TRANSLATION ENGINE & DATA
   const T = {
     fa: {
-      hero_lbl:'NAN DARBARI', hero_title:'از تنور<br>تا فنجان', hero_sub:'نان، قهوه و اصالت',
-      s1_lbl:'پرده اول', s1_title:'اصالت خام', s1_sub:'میراث ارتفاعات',
-      s2_lbl:'پرده دوم', s2_title:'هنر تفت', s2_sub:'حرارت، زمان و تکامل',
-      s3_title:'نان<br>درباری', scroll:'اسکرول', skip:'مشاهده منو',
+      hero_lbl:'NAN DARBARI',
+      skip:'مشاهده منو',
       nav_hot:'نوشیدنی گرم', nav_cold:'نوشیدنی سرد', nav_bakery:'نان و شیرینی',
-      about_title:'میراث طعم‌ها', about_desc:'نان درباری ترکیبی از عطر نان تازه، قهوه تخصصی و اصالت ایرانی است. جایی که سنت‌های پخت نان با هنر مدرن دم‌آوری قهوه گره می‌خورد تا تجربه‌ای لوکس و فراموش‌نشدنی خلق کند.',
+      about_title:'اینجا فقط یک کافه نیست', about_desc:'نان درباری جایی است برای نان تازه، شیرینی گرم، قهوه خوش‌طعم و چند دقیقه آرامش. همه‌چیز طوری چیده شده که ساده نباشد؛ از بوی نان داغ تا فنجان قهوه‌ای که کنار آن می‌نشیند.',
       cat_hot:'گرم', cat_cold:'سرد', cat_bak:'نان و شیرینی', hot_title:'هنر دم‌آوری', cold_title:'طراوت مطلق', bak_title:'عطر تنور',
       footer_sub:'Bakery & Coffee House', f_loc:'لوکیشن', f_hrs:'ساعات کاری', f_con:'ارتباط',
       footer_addr:'تهران، خیابان فرشته، پلاک ۱۲', footer_hrs:'هر روز ۰۸:۰۰ — ۲۳:۰۰',
-      h1n:'Espresso', h1l:'اسپرسو', h1d:'عصاره‌گیری دقیق از دانه‌های عربیکا، بادی سنگین و کرمای طلایی.', h1p:'۴۵٬۰۰۰ تومان',
+      h1n:'Espresso', h1l:'اسپرسو', h1d:'اسپرسوی غلیظ و خوش‌عطر، مناسب شروع یک روز جدی.', h1p:'۴۵٬۰۰۰ تومان',
       h2n:'Americano', h2l:'آمریکانو', h2d:'دابل شات اسپرسو روی آب داغ، ملایم و طولانی.', h2p:'۵۰٬۰۰۰ تومان',
       h3n:'Flat White', h3l:'فلت وایت', h3d:'دو شات اسپرسو، میکروفوم ابریشمی — کرمی و قوی.', h3p:'۶۵٬۰۰۰ تومان',
       h4n:'Latte', h4l:'لاته', h4d:'اسپرسو ملایم با شیر بخارپز و فوم نرم.', h4p:'۶۰٬۰۰۰ تومان',
-      h5n:'Persian Coffee', h5l:'قهوه اصیل ایرانی', h5d:'دم‌آوری سنتی با ترکیب ادویه‌های گرم و هل سبز.', h5p:'۵۵٬۰۰۰ تومان',
-      h6n:'Cardamom Latte', h6l:'لاته هل', h6d:'ترکیب لاته نرم با هل سبز تازه — امضای نان درباری.', h6p:'۶۸٬۰۰۰ تومان',
+      h5n:'Persian Coffee', h5l:'قهوه اصیل ایرانی', h5d:'قهوه‌ای گرم و خوش‌عطر با رایحه هل؛ ساده، متفاوت و دلنشین.', h5p:'۵۵٬۰۰۰ تومان',
+      h6n:'Cardamom Latte', h6l:'لاته هل', h6d:'لاته‌ای نرم با رایحه هل؛ انتخابی خاص برای سلیقه‌های متفاوت.', h6p:'۶۸٬۰۰۰ تومان',
       c1n:'Cold Brew', c1l:'کولد برو', c1d:'دم‌آوری ۲۴ ساعته در آب سرد — طعمی صاف بدون تلخی.', c1p:'۶۵٬۰۰۰ تومان',
       c2n:'Iced Latte', c2l:'آیس لاته', c2d:'اسپرسو تازه روی یخ، شیر کامل — ساده و بی‌نقص.', c2p:'۶۰٬۰۰۰ تومان',
       c3n:'Affogato', c3l:'افوگاتو', c3d:'اسپرسو داغ روی بستنی وانیل — جایی که گرم و سرد هم می‌شوند.', c3p:'۸۰٬۰۰۰ تومان',
@@ -690,21 +663,18 @@ document.addEventListener("DOMContentLoaded", function() {
       tSig:'امضا', tDes:'دسر', tUniq:'خاص', tFresh:'تازه', tTrad:'سنتی'
     },
     en: {
-      hero_lbl:'NAN DARBARI', hero_title:'From Oven<br>to Cup', hero_sub:'Bread, Coffee, Authenticity',
-      s1_lbl:'Act I', s1_title:'Raw Origins', s1_sub:'Highland Heritage',
-      s2_lbl:'Act II', s2_title:'Art of Roast', s2_sub:'Heat, Time, Evolution',
-      s3_title:'NAN<br>DARBARI', scroll:'SCROLL', skip:'View Menu',
+      hero_lbl:'NAN DARBARI', skip:'View Menu',
       nav_hot:'Hot Drinks', nav_cold:'Cold Drinks', nav_bakery:'Bakery & Pastry',
-      about_title:'Heritage of Taste', about_desc:'Nan Darbari blends the aroma of fresh bread, specialty coffee, and Persian authenticity. A place where traditional baking meets modern brewing art to create an unforgettable luxury experience.',
+      about_title:'More Than Just a Cafe', about_desc:'Nan Darbari is a place for fresh bread, warm pastries, flavorful coffee, and a few minutes of peace. Everything is arranged to be extraordinary; from the scent of hot bread to the cup of coffee sitting beside it.',
       cat_hot:'Hot', cat_cold:'Cold', cat_bak:'Bakery', hot_title:'Art of Brewing', cold_title:'Absolute Refreshment', bak_title:'Oven Fragrance',
       footer_sub:'Bakery & Coffee House', f_loc:'Location', f_hrs:'Hours', f_con:'Contact',
       footer_addr:'12 Fereshteh St, Tehran', footer_hrs:'Everyday 08:00 — 23:00',
-      h1n:'Espresso', h1l:'Espresso', h1d:'Precision extraction of Arabica beans, heavy body, golden crema.', h1p:'45,000 Toman',
+      h1n:'Espresso', h1l:'Espresso', h1d:'Rich and aromatic espresso, perfect for a serious start.', h1p:'45,000 Toman',
       h2n:'Americano', h2l:'Americano', h2d:'Double espresso over hot water, smooth and prolonged.', h2p:'50,000 Toman',
       h3n:'Flat White', h3l:'Flat White', h3d:'Double shot, silky microfoam — creamy and strong.', h3p:'65,000 Toman',
       h4n:'Latte', h4l:'Latte', h4d:'Smooth espresso with steamed milk and soft foam.', h4p:'60,000 Toman',
-      h5n:'Persian Coffee', h5l:'Persian Coffee', h5d:'Traditional brew infused with warm spices and green cardamom.', h5p:'55,000 Toman',
-      h6n:'Cardamom Latte', h6l:'Cardamom Latte', h6d:'Soft latte with fresh green cardamom — Nan Darbari signature.', h6p:'68,000 Toman',
+      h5n:'Persian Coffee', h5l:'Persian Coffee', h5d:'Warm and aromatic coffee with cardamom; simple and delightful.', h5p:'55,000 Toman',
+      h6n:'Cardamom Latte', h6l:'Cardamom Latte', h6d:'Soft latte with cardamom scent; a special choice.', h6p:'68,000 Toman',
       c1n:'Cold Brew', c1l:'Cold Brew', c1d:'24-hour cold steep — smooth and clean with no bitterness.', c1p:'65,000 Toman',
       c2n:'Iced Latte', c2l:'Iced Latte', c2d:'Fresh espresso over ice, whole milk — simple and perfect.', c2p:'60,000 Toman',
       c3n:'Affogato', c3l:'Affogato', c3d:'Hot espresso over vanilla ice cream — where hot meets cold.', c3p:'80,000 Toman',
@@ -720,21 +690,18 @@ document.addEventListener("DOMContentLoaded", function() {
       tSig:'Signature', tDes:'Dessert', tUniq:'Unique', tFresh:'Fresh', tTrad:'Traditional'
     },
     tr: {
-      hero_lbl:'NAN DARBARI', hero_title:'Fırından<br>Fincana', hero_sub:'Ekmek, Kahve, Özgünlük',
-      s1_lbl:'Perde I', s1_title:'Ham Kökenler', s1_sub:'Yayla Mirası',
-      s2_lbl:'Perde II', s2_title:'Kavurma Sanatı', s2_sub:'Isı, Zaman, Evrim',
-      s3_title:'NAN<br>DARBARI', scroll:'KAYDIR', skip:'Menüyü Gör',
+      hero_lbl:'NAN DARBARI', skip:'Menüyü Gör',
       nav_hot:'Sıcak İçecekler', nav_cold:'Soğuk İçecekler', nav_bakery:'Fırın & Tatlılar',
-      about_title:'Lezzet Mirası', about_desc:'Nan Darbari, taze ekmek kokusunu, nitelikli kahveyi ve Fars özgünlüğünü harmanlar. Geleneksel fırıncılığın modern demleme sanatı ile buluştuğu lüks bir deneyim.',
+      about_title:'Sadece Bir Kafe Değil', about_desc:'Nan Darbari taze ekmek, sıcak hamur işleri, lezzetli kahve ve birkaç dakikalık huzur için bir yerdir. Her şey sıradan olmayacak şekilde düzenlendi; sıcak ekmeğin kokusundan yanındaki bir fincan kahveye kadar.',
       cat_hot:'Sıcak', cat_cold:'Soğuk', cat_bak:'Fırın', hot_title:'Demleme Sanatı', cold_title:'Mutlak Ferahlık', bak_title:'Fırın Kokusu',
       footer_sub:'Fırın & Kahve Evi', f_loc:'Konum', f_hrs:'Saatler', f_con:'İletişim',
       footer_addr:'12 Fereshteh St, Tahran', footer_hrs:'Her gün 08:00 — 23:00',
-      h1n:'Espresso', h1l:'Espresso', h1d:'Arabica çekirdeklerinin hassas ekstraksiyonu, yoğun gövde, altın krema.', h1p:'45.000 Tümen',
+      h1n:'Espresso', h1l:'Espresso', h1d:'Ciddi bir başlangıç için mükemmel, zengin ve aromatik espresso.', h1p:'45.000 Tümen',
       h2n:'Americano', h2l:'Americano', h2d:'Sıcak su üzerine double espresso, pürüzsüz ve uzun.', h2p:'50.000 Tümen',
       h3n:'Flat White', h3l:'Flat White', h3d:'Çift shot, ipeksi mikroköpük — kremsi ve güçlü.', h3p:'65.000 Tümen',
       h4n:'Latte', h4l:'Latte', h4d:'Buharda pişirilmiş süt ve yumuşak köpüklü pürüzsüz espresso.', h4p:'60.000 Tümen',
-      h5n:'Persian Coffee', h5l:'Fars Kahvesi', h5d:'Sıcak baharatlar ve yeşil kakule ile demlenmiş geleneksel kahve.', h5p:'55.000 Tümen',
-      h6n:'Cardamom Latte', h6l:'Kakule Latte', h6d:'Taze yeşil kakule ile yumuşak latte — Nan Darbari imzası.', h6p:'68.000 Tümen',
+      h5n:'Persian Coffee', h5l:'Fars Kahvesi', h5d:'Kakuleli sıcak ve aromatik kahve; sade ve keyifli.', h5p:'55.000 Tümen',
+      h6n:'Cardamom Latte', h6l:'Kakule Latte', h6d:'Kakule kokulu yumuşak latte; farklı zevkler için özel bir seçim.', h6p:'68.000 Tümen',
       c1n:'Cold Brew', c1l:'Soğuk Demleme', c1d:'24 saatlik soğuk demleme — pürüzsüz ve acısız.', c1p:'65.000 Tümen',
       c2n:'Iced Latte', c2l:'Buzlu Latte', c2d:'Buzun üzerine taze espresso, tam yağlı süt — sade ve kusursuz.', c2p:'60.000 Tümen',
       c3n:'Affogato', c3l:'Affogato', c3d:'Vanilyalı dondurmanın üzerine sıcak espresso.', c3p:'80.000 Tümen',
